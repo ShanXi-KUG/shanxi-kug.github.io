@@ -20,5 +20,4 @@
 > ## About Us：
 >
 > **Mail**：[chengkelfanke@gmail.com](mailto:chengkelfanke@gmail.com) 
->
 > **WeChat**：[Click to view WeChat QR Code](https://github.com/user-attachments/assets/5ba49f32-05ef-473a-b0df-a95efe3d0d61)

@@ -20,6 +20,6 @@
 >
 > **Mail**：[chengkelfan@qq.com](mailto:chengkelfan@qq.com)
 > 
-> **QQid**：3222087513
+> **QQ**：3222087513
 >
-> **WXid**：[点击查看维护者微信好友二维码](https://github.com/user-attachments/assets/b160b5ac-5c99-42f3-9bfa-491bd00941d1)
+> **WX**：[点击查看维护者微信二维码](https://github.com/user-attachments/assets/b160b5ac-5c99-42f3-9bfa-491bd00941d1)

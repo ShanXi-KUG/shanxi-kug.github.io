@@ -16,10 +16,10 @@
 
 --------
 
-> 联系我们：
+> ## 联系我们：
 >
-> **邮箱**：[点击这里发送邮件](mailto:chengkelfan@qq.com)
+> **Mail**：[chengkelfan@qq.com](mailto:chengkelfan@qq.com)
 > 
-> **QQ**：3222087513
+> **QQid**：3222087513
 >
-> **微信群聊**：[微信群聊二维码](#)
+> **WXid**：[点击查看维护者微信好友二维码](https://github.com/user-attachments/assets/b160b5ac-5c99-42f3-9bfa-491bd00941d1)

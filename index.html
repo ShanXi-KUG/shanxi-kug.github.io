@@ -1,10 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hans">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue + TS</title>
+    <meta name="author" content="Leo Cheng" />
+    <meta name="comment" content="欢迎大家加入山西KUG呀！加入方式见：联系我们（手机端点击菜单），扫描社交平台二维码加入！" />
+    <title>山西 - KUG</title>
+    <style>html, :root { interpolate-size: allow-keywords; }</style>
+    <script async>
+        console.log("");
+        const style = `
+            display: block;
+            box-sizing: border-box;
+        `;
+        const style2 = `
+            ${style}
+            color: green;
+            border: 5px solid blue;
+            padding: .5em;
+            margin-left: 1.25em;
+        `
+        const logo = `     _____   _   _       ___   __   _  __    __  _        _   _    _   _   _____
+    /  ___/ | | | |     /   | |  \\ | | \\ \\  / / | |      | | / /  | | | | /  ___|
+    | |___  | |_| |    / /| | |   \\| |  \\ \\/ /  | |      | |/ /   | | | | | |
+    \\___  \\ |  _  |   / / | | | |\\   |   }  {   | |      | |\\ \\   | | | | | |  _
+     ___| | | | | |  / /  | | | | \\  |  / /\\ \\  | |      | | \\ \\  | |_| | | |_| |
+    /_____/ |_| |_| /_/   |_| |_|  \\_| /_/  \\_\\ |_|      |_|  \\_\\ \\_____/ \\_____/
+        `
+        console.log(`%c${logo}`, style);
+        console.log(`%c感兴趣的小伙伴可以联系我们：WX:"heke1228"，GH:"https://github.com/ShanXi-KUG"！`, style2);
+        console.log("");
+    </script>
   </head>
   <body>
     <div id="app"></div>

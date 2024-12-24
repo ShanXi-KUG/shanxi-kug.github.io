@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import InvitationCard from "@/components/InvitationCard.vue";
-import {onMounted, onUnmounted, type Ref, ref} from "vue";
+import {onMounted, type Ref, ref} from "vue";
 
 const body: Ref<HTMLElement | null> = ref(null);
 const main: Ref<HTMLElement | null> = ref(null);

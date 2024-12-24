@@ -27,7 +27,7 @@
   --default-light-white: #F1F6FF;
   --default-poor-blue-white: #ebf0ff;
   --default-dark-white: #E0E5ED;
-  --default-half-gray: fade(#161B08, 55.5%);
+  --default-half-gray: fade(#161B08, 66.7%);
   --default-white-groove: fade(#161B08, 27.5%);
   --default-black-groove: fade(#E9EEF7, 27.5%);
   --default-star: radial-gradient(50% 50%, rgba(0, 213, 255, 1) 0%, rgba(0, 26, 255, 0.01) 100%);
@@ -56,7 +56,11 @@
   --default-black-green-rgb: red(#0AFAB6) green(#0AFAB6) blue(#0AFAB6);
   --default-black-yellow-rgb: red(#FFAA00) green(#FFAA00) blue(#FFAA00);
   --default-black-purple-rgb: red(#4000FF) green(#4000FF) blue(#4000FF);
+
+  --default-kug-gradient: linear-gradient(120.98deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
 }
+
+@default-kug-gradient: linear-gradient(120.98deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
 
 @font-face {
   font-family: "HarmonyOS Sans SC";
@@ -345,7 +349,7 @@ body {
 }
 
 * {
-  transition: all 0.2s ease-in-out;
+  //transition: all 0.2s ease-in-out;
   box-sizing: border-box;
 }
 
@@ -371,10 +375,34 @@ body {
   text-overflow: ellipsis;
 }
 
+.use-default-transition() {
+  transition: all 0.2s ease-in-out;
+}
+
 .disable-list-style() {
   ul, li {
     list-style: none;
     margin: 0;
     padding: 0;
   }
+}
+
+.disable-browser-scrollbar() {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none;
+  }
+
+  &::scrollbar {
+    display: none;
+  }
+
+  &::scrollbar-thumb {
+    display: none;
+  }
+
+  scrollbar-width: none;
 }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import InvitationCard from "@/components/InvitationCard.vue";
 import {onMounted, type Ref, ref} from "vue";
 
 const body: Ref<HTMLElement | null> = ref(null);
@@ -83,7 +82,7 @@ main#body(ref="body")
           main#content-wrapper
             #card-wrapper
               #card-content(dev)
-                InvitationCard
+                InvitationCard()
   footer#footer-wrapper(name="about")
     #footer-context
       ul#platforms

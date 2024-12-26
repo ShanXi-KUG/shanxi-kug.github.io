@@ -17,9 +17,9 @@
           p 线下渠道：
             a 山西省晋中市榆次区大学街太原理工大学明向校区行勉楼404教室
           p 线上渠道：
-            a 哔哩哔哩
+            a 哔哩哔哩直播间
             |、
-            a 腾讯会议
+            a 腾讯会议#233-233-233
     article#card-content-wrapper
       //- 这里之后使用子组件，读：MD、PDF、TXT、HTML、JSON等等，之后专门设置一个文件夹 - activity
       #content-area

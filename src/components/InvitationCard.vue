@@ -19,7 +19,7 @@
 		  |、
 		  a 腾讯会议
 	article#card-content-wrapper
-	  // 这里之后使用子组件，读：MD、PDF、TXT、HTML等等，之后专门设置一个文件夹activities
+	  /* 这里之后使用子组件，读：MD、PDF、TXT、HTML等等，之后专门设置一个文件夹activities */
 	footer#card-date-wrapper
 	  #curr-date 2025.03.23
 	nav#card-option-wrapper

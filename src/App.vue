@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import InvitationCard from "@/components/InvitationCard.vue";
+
 import {onMounted, type Ref, ref} from "vue";
 
 const body: Ref<HTMLElement | null> = ref(null);
@@ -73,7 +75,7 @@ main#body(ref="body")
                     a(title="距今152天")
         main#content-wrapper
           #card-wrapper
-            #card-content(dev)
+            #card-content
               InvitationCard
     #history-active(name="history")
       #history-active-wrapper
@@ -81,7 +83,7 @@ main#body(ref="body")
           header#title 历史活动
           main#content-wrapper
             #card-wrapper
-              #card-content(dev)
+              #card-content
                 InvitationCard()
   footer#footer-wrapper(name="about")
     #footer-context
@@ -566,8 +568,8 @@ main#body(ref="body")
                 &[dev] {background-color: #964be5}
                 position: relative;
 
-                .default-shadow-mini-outset();
                 .use-mini-border-radius();
+                .default-shadow-mini-outset();
               }
             }
           }
@@ -641,8 +643,8 @@ main#body(ref="body")
                   &[dev] {background-color: #964be5}
                   position: relative;
 
-                  .default-shadow-mini-outset();
                   .use-mini-border-radius();
+                  .default-shadow-mini-outset();
                 }
               }
             }
@@ -881,7 +883,7 @@ main#body(ref="body")
           position: absolute;
           bottom: 0;
           font-size: .66em;
-          color: var(--default-dark-white);
+          color: var(--default-black-groove);
         }
       }
     }

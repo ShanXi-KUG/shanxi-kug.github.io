@@ -40,9 +40,9 @@ main#body(ref="body")
           a(href="https://kotlinlang.org/docs/home.html", target="_blank")
         hr
         li#style
-          // 可点击的：switch
+          //- 可点击的：switch
           #switch(title="切换至：夜间模式")
-            // 点击后移动的小太阳 / 月亮
+            //- 点击后移动的小太阳 / 月亮
             #btn
         li#github(title="访问我们的组织")
           a(href="https://github.com/ShanXi-KUG")
@@ -68,7 +68,7 @@ main#body(ref="body")
             #axis-content
               #axis
                 #axis-date
-                  // 本体是时间星，其余的都是伪元素，上下参差使用nth选择即可
+                  //- 本体是时间星，其余的都是伪元素，上下参差使用nth选择即可
                   .date-point(title="2025.03.23：Kotlin分享会", style="--pos: 15%")
                     a(title="距今35天")
                   .date-point(title="2025.07.23：XXX随便什么名字的开发者大会", style="--pos: 68%")
@@ -92,7 +92,7 @@ main#body(ref="body")
         li#mail
           a(href="mailto:chengkelfan@qq.com")
         li#wx
-        // GH的PC中屏幕以上不显示
+        //- GH的PC中屏幕以上不显示
         li#gh
           a(href="https://github.com/ShanXi-KUG")
       #copyright ©2025 山西 KUG Powered by VueJs & LeoCheng

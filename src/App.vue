@@ -20,6 +20,8 @@ onMounted(() => {
   // 因为显示右下角的返回页面顶部的按钮有可能被跳id和滚动影响...
   updateBackTop()
 })
+
+const shownMenu: Ref<Boolean> = ref(false);
 </script>
 
 <template lang="pug">
@@ -33,7 +35,7 @@ main#body(ref="body")
           a(href="#new-active")
         li 历史活动
           a(href="#history-active")
-        li 联系我们
+        li#join-us 联系我们
           a(href="#footer-wrapper")
         hr
         li#kotlin-docs(title="点击跳转Kotlin官文") Kotlin Docs
@@ -46,6 +48,8 @@ main#body(ref="body")
             #btn
         li#github(title="访问我们的组织")
           a(href="https://github.com/ShanXi-KUG")
+        hr
+        li#copyright ©2025 山西 KUG Powered by VueJs & LeoCheng
   article#main(ref="main")
     #home-page(name="main", ref="home")
       #home-page-wrapper
@@ -134,6 +138,10 @@ main#body(ref="body")
 
     .use-mini-border-radius();
     .default-shadow-mini-outset();
+
+    @media (width < 768px) {
+      display: none;
+    }
   }
 
   main#body {
@@ -214,6 +222,10 @@ main#body(ref="body")
               background-clip: text;
             }
 
+            &#copyright {
+              display: none;
+            }
+
             &#style {
               width: 2.6em;
               height: 1.4em;
@@ -260,15 +272,239 @@ main#body(ref="body")
             height: @sub-height * 0.66;
             border-right: 2px var(--default-half-gray) solid;
             opacity: .55;
+
+            &:last-of-type {
+              display: none;
+            }
           }
         }
       }
 
       .default-shadow-mini-outset();
+
+      @media (width < 768px) {
+        nav#nav-wrapper {
+          display: none;
+        }
+
+        place-content: center;
+
+        // todo: 之后加上两旁的三杠和小太阳
+
+        a {
+          display: inline-block;
+          position: relative;
+          height: 100%;
+          width: max-content;
+          left: 0;
+          place-content: center;
+          #home-logo {
+            height: 80%;
+          }
+        }
+
+        // 点击三条杠杠，打开侧边菜单
+        &[mode="open"] {
+
+          display: flex;
+          padding-top: 0;
+
+          &::before {
+            content: "";
+            display: block;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            background-color: rgba(0, 0, 0, .5);
+            z-index: -1;
+          }
+
+          nav#nav-wrapper {
+            float: left;
+            position: fixed;
+            width: 88%;
+            height: 100%;
+            background-color: var(--default-dark-white);
+            left: 0;
+            z-index: 666;
+
+            ul#nav {
+              width: 100%;
+              flex-direction: column;
+              padding: 0 !important;
+
+              &::after {
+                content: "其他选项";
+                position: absolute;
+                text-align: center;
+                top: 0;
+                display: block;
+                @font-size: 1.5;
+                font-weight: 500;
+                color: var(--default-half-gray);
+                font-size: @font-size * 1em;
+                height: calc(@header-height / @font-size - 1px);
+                line-height: calc(@header-height / @font-size - 1px);
+                width: 100%;
+                background-color: var(--default-light-white);
+                box-shadow: 0 1px var(--shadow-black);
+              }
+
+              li {
+                position: relative;
+                width: 92%;
+                @height: 2.88em;
+                height: @height !important;
+                line-height: @height !important;
+                font-size: max(1.5em) !important;
+                margin-bottom: .5em;
+                text-indent: calc(@height / 3);
+
+                &#join-us {
+                  display: none;
+                }
+
+                &:has(+#join-us) {
+                  &::after {
+                    border-bottom: none;
+                  }
+                  &::before {
+                    border-radius: 0 0 .5em .5em;
+                  }
+                }
+
+                &::after {
+                  content: "";
+                  display: block;
+                  position: absolute;
+                  width: 100%;
+                  border-bottom: 1px var(--default-half-gray) solid;
+                  z-index: 886;
+                }
+
+                &:has(+li) {
+                  margin-bottom: 0;
+
+                  &::before {
+                    width: 100%;
+                    border-radius: 0;
+                  }
+
+                  &:first-child::before {
+                    border-radius: .5em .5em 0 0;
+                  }
+                }
+
+                &:has(+hr) {
+                  &::before {
+                    border-radius: 0 0 .5em .5em;
+                  }
+
+                  &::after {
+                    border-bottom: none;
+                  }
+                }
+
+                &::before {
+                  // 因为之前的li为了彩色文字牺牲了bc，所以只能用伪元素来写bc了
+                  content: "";
+                  display: block;
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  background-color: var(--default-light-white);
+                  z-index: -1;
+                  border-radius: .5em;
+
+                  .default-shadow-mini-outset();
+                }
+
+                &#copyright {
+                  display: unset;
+                }
+
+                a {
+
+                  &::after {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    @width: 2em;
+                    width: @width;
+                    line-height: @width;
+                    aspect-ratio: 1 / 1;
+                    right: calc(@width / 3);
+                    top: calc(@width / 4);
+                    background-image: url("/icons/innerlink.svg");
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: 55% 55%;
+                  }
+                }
+
+                &#kotlin-docs a::after {
+                  background-size: 60% 60%;
+                  background-image: url("/icons/newlink.svg");
+                }
+              }
+
+              hr {
+                border: none;
+                &+li:has(+hr)::before {
+                  border-radius: .5em;
+                }
+              }
+
+              li#style {
+                display: none;
+              }
+
+              li#github {
+                background-image: none;
+                position: relative;
+                height: 9em!important;
+                margin-top: 2em;
+
+                &::before {
+                  content: "";
+                  display: block;
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  border-radius: .5em;
+                }
+
+                &::after {
+                  border: unset;
+                }
+
+                &>a {
+                  display: none;
+                  &::after {
+                    all: unset;
+                  }
+                }
+              }
+
+              li#copyright {
+                font-size: .67em !important;
+                text-align: center;
+                position: absolute;
+                bottom: 0;
+                &::after, &::before, &>a::after, &>a::before {
+                  all: unset;
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     article#main {
       width: min(max(72%, 768px), 100%);
+      @media (width < 1024px) {width: 100%}
       display: block;
       margin: 0 auto;
       height: 100%;
@@ -551,6 +787,7 @@ main#body(ref="body")
             place-content: center;
             place-items: center;
             padding-bottom: 2.88%;
+            overflow: hidden;
 
             #card-wrapper {
               width: @sub-content-width;
@@ -623,19 +860,19 @@ main#body(ref="body")
               position: relative;
               width: 100%;
               height: 100%;
+              overflow: hidden;
               &[dev] {background-color: #15ED41;}
               place-content: center;
               place-items: center;
               padding-bottom: 4.38%;
 
               #card-wrapper {
+                width: 100%;
                 margin: 0 auto;
                 height: 100%;
-                background-color: var(--default-white);
                 position: relative;
                 padding: .33em 2.33em;
 
-                .use-mini-border-radius();
 
                 #card-content {
                   width: 100%;
@@ -659,6 +896,10 @@ main#body(ref="body")
       width: 100%;
       background: var(--default-kug-gradient);
       position: relative;
+
+      @media (width < 768px) {
+        display: none;
+      }
 
       #footer-context {
         width: 100%;

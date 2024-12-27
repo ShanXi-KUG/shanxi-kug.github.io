@@ -54,6 +54,10 @@
     display: grid;
     grid-template: "inv-header" 86fr "inv-center" 255fr "inv-footer" 41fr;
 
+    @media (width < 1440px) {
+      padding-top: .5em;
+    }
+
     #header-info-wrapper {
       grid-area: inv-header;
       width: 100%;
@@ -123,6 +127,41 @@
           }
         }
       }
+
+      @media (width < 1440px) {
+        // 这里开始，title和desc冲突，需要将title居中
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        place-content: center;
+        place-items: center;
+
+        #card-title-wrapper {
+          place-items: center;
+          place-content: center;
+
+          #title {
+            text-align: center;
+          }
+        }
+
+        #card-desc-wrapper  {
+
+          #card-desc {
+            overflow: hidden;
+            display: inline-block;
+
+            p {
+              width: 100%;
+              white-space: normal;
+
+              a {
+                display: inline;
+              }
+            }
+          }
+        }
+      }
     }
 
     #card-content-wrapper {
@@ -137,7 +176,7 @@
       #content-area {
         width: 100%;
         height: 100%;
-        position: absolute;
+        position: relative;
       }
     }
 

@@ -31,6 +31,10 @@
             color: transparent;
             text-fill-color: transparent;
             font-family: unset;
+            @supports not (background-clip: text) {
+              background-image: none !important;
+              color: var(--kug-default-purple) !important;
+            }
         `;
         const style2 = `
             display: block;

@@ -132,9 +132,8 @@ main#body(ref="body")
       line-height: 200%;
       font-size: 1.75em;
       overflow: hidden;
-      background-image: var(--default-kug-gradient);
-      background-clip: text;
-      color: transparent;
+
+      .use-default-gradient-text();
     }
 
     .use-mini-border-radius();
@@ -224,9 +223,8 @@ main#body(ref="body")
             &#new, &#kotlin-docs {
               font-weight: 800;
               font-size: 1.15em;
-              color: transparent;
-              background: linear-gradient(120.98deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
-              background-clip: text;
+
+              .use-default-gradient-text();
             }
 
             &#copyright {
@@ -609,17 +607,14 @@ main#body(ref="body")
                 font-weight: bold;
                 opacity: 1;
                 &:hover {
-                  background-image: var(--default-kug-gradient);
-                  color: transparent;
-                  background-clip: text;
 
                   .use-default-transition();
+                  .use-default-gradient-text();
                 }
                 color: #964be5;
               }
 
               a#github-org {
-                background-image: var(--default-kug-gradient);
                 opacity: .88;
                 &:hover {
                   opacity: 1;
@@ -629,11 +624,11 @@ main#body(ref="body")
                     .use-default-transition();
                   }
                 }
-                background-clip: text;
-                color: transparent;
                 display: inline-block;
                 width: max-content;
                 position: relative;
+
+                .use-default-gradient-text();
 
                 &::before {
                   content: "";
@@ -802,13 +797,11 @@ main#body(ref="body")
                         white-space: nowrap;
                         overflow: hidden;
                         display: inline-block;
-                        background-image: var(--default-kug-gradient);
-                        background-clip: text;
-                        color: transparent;
                         transform: translateX(-35%);
                         transform-origin: center;
 
                         .use-default-transition();
+                        .use-default-gradient-text();
                       }
 
                       @bias-v-ax: 97.5%;
@@ -1249,9 +1242,8 @@ main#body(ref="body")
               font-size: 1.44em !important;
               display: inline-block;
               text-align: center;
-              background-image: var(--default-kug-gradient);
-              background-clip: text;
-              color: transparent;
+
+              .use-default-gradient-text();
             }
           }
 
@@ -1285,9 +1277,8 @@ main#body(ref="body")
             font-size: 1.44em !important;
             display: block;
             text-align: center;
-            background-image: var(--default-kug-gradient);
-            background-clip: text;
-            color: transparent;
+
+            .use-default-gradient-text();
           }
 
           #history-wrapper {

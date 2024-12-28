@@ -88,10 +88,9 @@
           font-size: 1.88em;
           font-weight: 800;
           letter-spacing: -.02em;
-          background-image: var(--default-kug-gradient);
-          color: transparent;
-          background-clip: text;
           position: relative;
+
+          .use-default-gradient-text();
 
           &::before {
             content: "";
@@ -231,9 +230,8 @@
         #curr-date {
           font-size: 1.125em;
           font-weight: 800;
-          background-image: var(--default-kug-gradient);
-          color: transparent;
-          background-clip: text;
+
+          .use-default-gradient-text();
         }
       }
 

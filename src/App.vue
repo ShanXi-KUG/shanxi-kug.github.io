@@ -165,6 +165,7 @@ main#body(ref="body")
       background-color: var(--default-light-white);
       padding: .1em 6.66em 0;
       display: flex;
+      place-items: center center;
       place-content: center space-between;
       z-index: 233;
       top: 0;
@@ -1238,10 +1239,19 @@ main#body(ref="body")
             &::after {
               content: "最近活动";
               width: max-content;
-              height: max-content;
+              @height: 2.33em;
+              height: 2em !important;
+              line-height: @height !important;
               font-size: 1.44em !important;
               display: inline-block;
               text-align: center;
+              margin: 0 auto !important;
+
+              @media (width < 456px) {
+                @height: 2em;
+                height: @height !important;
+                line-height: @height !important;
+              }
 
               .use-default-gradient-text();
             }
@@ -1277,6 +1287,13 @@ main#body(ref="body")
             font-size: 1.44em !important;
             display: block;
             text-align: center;
+            margin: 0 auto !important;
+
+            @media (width < 456px) {
+              @height: 2em;
+              height: @height !important;
+              line-height: @height !important;
+            }
 
             .use-default-gradient-text();
           }

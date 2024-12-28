@@ -76,6 +76,7 @@
       display: flex;
       place-items: flex-start center;
       place-content: center space-between;
+      flex: 1 1 auto;
 
       #card-title-wrapper {
         width: 100%;

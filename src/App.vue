@@ -1192,7 +1192,7 @@ main#body(ref="body")
     }
   }
 
-  @media (width <= 768px) {
+  @media (width < 768px) {
     article#main {
       scroll-snap-type: unset !important;
       background-color: var(--default-dark-white) !important;

@@ -27,6 +27,7 @@ const shownMenu: Ref<Boolean> = ref(false);
 <template lang="pug">
 main#body(ref="body")
   header#header
+    #menu-btn(title="更多选项")
     a(href="/")
       img#home-logo(src='/logo_only_en.svg', align='center', alt='ShanXi - KUG')
     nav#nav-wrapper
@@ -167,6 +168,12 @@ main#body(ref="body")
       display: flex;
       place-content: center space-between;
       z-index: 233;
+      top: 0;
+      left: 0;
+
+      #menu-btn {
+        display: none;
+      }
 
       @sub-height: max(70%);
 
@@ -283,11 +290,39 @@ main#body(ref="body")
       .default-shadow-mini-outset();
 
       @media (width < 768px) {
-        nav#nav-wrapper {
-          display: none;
+        padding: 0 1em;
+        place-content: center space-between !important;
+
+        #menu-btn {
+          display: block;
+          height: 95%;
+          aspect-ratio: 1 / 1;
+          &[dev] {background-color: #4000FF}
+          background-image: url("/icons/menubtn.svg");
+          background-repeat: no-repeat;
+          background-position: 50% 57.5%;
+          background-size: 45%;
         }
 
-        place-content: center;
+        nav#nav-wrapper {
+          ul#nav {
+            width: max-content;
+          }
+
+          ul * {
+            display: none !important;
+          }
+
+          li#style, li#style * {
+            display: block !important;
+          }
+
+          li#style {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 100% !important;
+          }
+        }
 
         // todo: 之后加上两旁的三杠和小太阳
 
@@ -304,6 +339,7 @@ main#body(ref="body")
         }
 
         // 点击三条杠杠，打开侧边菜单
+        // 目前已经弃用！！！，但是就暂时留着吧...
         &[mode="open"] {
 
           display: flex;
@@ -630,6 +666,32 @@ main#body(ref="body")
               font-size: 1.15em;
               font-weight: 350;
               color: var(--default-black);
+            }
+          }
+
+          @media (1024px <= width < 1280px) or (width < 768px) {
+            display: flex !important;
+            flex-direction: column !important;
+            place-content: center space-evenly !important;
+
+            img {
+              width: 80% !important;
+            }
+          }
+        }
+
+        @media (1024px <= width < 1280px) or (width < 768px) {
+
+          footer#footer {
+            display: none !important;
+          }
+
+          main#content-wrapper {
+            height: max-content !important;
+
+            #content {
+              height: max-content !important;
+              width: 80% !important;
             }
           }
         }
@@ -1125,6 +1187,129 @@ main#body(ref="body")
           bottom: 0;
           font-size: .66em;
           color: var(--default-black-groove);
+        }
+      }
+    }
+  }
+
+  @media (width <= 768px) {
+    article#main {
+      scroll-snap-type: unset !important;
+      background-color: var(--default-dark-white) !important;
+
+      &>* {
+        display: block !important;
+        width: 94.44% !important;
+        margin: 0 auto !important;
+        margin-bottom: 1em !important;
+        background-color: var(--default-light-white) !important;
+
+        .use-half-border-radius() !important;
+        .default-shadow-outset() !important;
+      }
+
+      #home-page {
+        margin-top: 5em !important;
+        height: 25em !important;
+
+        // 纯粹为了提升优先级...
+        main#body & #home-page-wrapper {
+          place-content: center space-between !important;
+
+          #content-wrapper {
+            #content {
+              margin-bottom: 3em !important;
+            }
+          }
+        }
+      }
+
+      #new-active {
+
+        #new-active-wrapper {
+          display: flex !important;
+          flex-direction: column !important;
+
+          nav#time-axis-wrapper {
+            height: 3.34em !important;
+            position: relative !important;
+            display: flex !important;
+            place-items: flex-end !important;
+            place-content: center !important;
+            padding-top: 0 !important;
+
+            #axis-wrapper {
+              display: none !important;
+            }
+
+            &::after {
+              content: "最近活动";
+              width: max-content;
+              height: max-content;
+              font-size: 1.44em !important;
+              display: inline-block;
+              text-align: center;
+              background-image: var(--default-kug-gradient);
+              background-clip: text;
+              color: transparent;
+            }
+          }
+
+          main#content-wrapper {
+            padding-bottom: 1.11em !important;
+
+            #card-wrapper {
+              padding: max(7px, .5em) !important;
+              border-radius: unset !important;
+              background-color: var(--default-white) !important;
+              .default-shadow-mini-inset() !important;
+            }
+          }
+        }
+      }
+
+      #history-active {
+        height: max-content !important;
+
+        #history-active-wrapper {
+          height: max-content !important;
+          // CV过来要命啊啊啊，底部padding计算方式为了和新活动保持一致，选取了&::after与main#content-wrapper
+          padding: 0 0 (1.11em * 1.44em) !important;
+          position: relative !important;
+
+          &::before {
+            content: "历史活动";
+            width: max-content;
+            height: max-content;
+            line-height: (3.34em / 1.44em + .2em);
+            font-size: 1.44em !important;
+            display: block;
+            text-align: center;
+            background-image: var(--default-kug-gradient);
+            background-clip: text;
+            color: transparent;
+          }
+
+          #history-wrapper {
+            position: relative !important;
+            display: block !important;
+            padding: 0 !important;
+            border-radius: unset !important;
+            background-color: var(--default-white) !important;
+            .default-shadow-mini-inset() !important;
+
+            #title {
+              display: none;
+            }
+
+            #content-wrapper {
+              padding: 0 !important;
+
+              #card-wrapper {
+                padding: max(7px, .5em) !important;
+              }
+            }
+          }
         }
       }
     }

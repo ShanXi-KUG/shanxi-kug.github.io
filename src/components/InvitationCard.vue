@@ -44,6 +44,11 @@
 	.use-mini-border-radius();
 	.default-shadow-mini-outset();
 
+  @media (width < 768px) {
+    padding: .88em .86em .84em;
+    .default-shadow-outset();
+  }
+
 	#card-inner-wrapper {
 		width: 100%;
 		height: 100%;
@@ -53,6 +58,11 @@
     padding: 1.1em 2.11em 1.08em;    // 弥补阴影和高光的视觉差
     display: grid;
     grid-template: "inv-header" 86fr "inv-center" 255fr "inv-footer" 41fr;
+
+    @media (width < 768px) {
+      padding: .60em 1.11em .58em;
+      grid-template: "inv-header" 88fr "inv-center" 271fr "inv-footer" 33fr;
+    }
 
     @media (width < 1440px) {
       padding-top: .5em;
@@ -146,18 +156,44 @@
         }
 
         #card-desc-wrapper  {
+          width: 100%;
+          height: auto;
 
           #card-desc {
             overflow: hidden;
-            display: inline-block;
 
             p {
               width: 100%;
+              height: 100%;
               white-space: normal;
 
               a {
                 display: inline;
               }
+            }
+          }
+        }
+      }
+
+      @media (width < 768px) {
+        place-content: center normal;
+        gap: .66em;
+
+        #card-title-wrapper {
+          height: max-content;
+
+          #title {
+            font-size: 1.55em;
+            letter-spacing: 0;
+            font-weight: 600 ;
+          }
+        }
+
+        #card-desc-wrapper {
+          #card-desc {
+            p {
+              height: max-content;
+              font-size: .88em;
             }
           }
         }

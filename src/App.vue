@@ -21,7 +21,7 @@ onMounted(() => {
   updateBackTop()
 })
 
-const shownMenu: Ref<Boolean> = ref(false);
+// const shownMenu: Ref<Boolean> = ref(false);
 </script>
 
 <template lang="pug">

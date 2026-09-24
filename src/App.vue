@@ -21,7 +21,7 @@ const {y: inner} = useScroll(main);
 
 const showBackTop = computed(() => outer.value > 0 || inner.value / (home.value?.scrollHeight || 800) > .97);
 
-// 轴覆盖全部活动，历史那段也要能点
+// 历史那段也要能点
 const axisItems = [...upcoming, ...history].filter(
   (a, i, all) => all.findIndex((b) => b.id === a.id) === i,
 );
@@ -29,7 +29,6 @@ const axisItems = [...upcoming, ...history].filter(
 const {activity: wanted} = useUrlSearchParams<{activity?: string}>("history");
 const picked = ref<Activity | null>(activities.find((a) => a.id === wanted) ?? null);
 
-/** 左键：把对应那一栏切到该活动并滚过去。右键才弹窗 */
 function jump(a: Activity): void {
   const done = a.status === "已结束";
   decks.focus(done ? "history" : "new", a.id);
@@ -316,7 +315,7 @@ main#body(ref="body")
 
               .use-mini-border-radius();
 
-              // 阴影与圆角归明信片自己，留在这层会在翻转时变成一圈不动的假边框
+              // 阴影归明信片自己，放在这层翻转时会成一圈静止的边框
               #card-content {
                 width: 100%;
                 height: 100%;

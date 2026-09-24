@@ -63,7 +63,7 @@ const body = computed(() => props.activity.recap ?? props.activity.detail)
 
 const tip = ref({ x: 0, y: 0, at: '' })
 
-/** 与时间轴同一套：跟着指针走，且只在文字真被省略号截掉时才出现 */
+/** 只在文字被截断时出现，与时间轴一致 */
 function track(e: PointerEvent, at: string) {
   const line = e.currentTarget as HTMLElement
   const text = line.querySelector('p')
@@ -137,14 +137,12 @@ Teleport(to="body")
     transform-style: preserve-3d;
 
     transition: transform .62s @ease-slide;
-    // 翻转期间提前交给合成层，省掉逐帧重绘
-    will-change: auto;
 
     &.flipped {
       transform: rotateY(180deg);
     }
 
-    // 旋转走 transform 过渡，缩放与抬升走并行关键帧，两条同时推进
+    // 旋转走过渡，缩放与抬升走关键帧，两者并行；只在翻转期间交给合成层
     &.flipping {
       animation: --card-turn .62s @ease-slide;
       will-change: transform, scale, translate;
@@ -368,12 +366,12 @@ Teleport(to="body")
     }
   }
 
-  // 卡背默认只有炫彩，内容由 back.md 决定，一律居中
   .face-back {
     position: absolute;
     inset: 0;
     display: grid;
     place-items: center;
+    // 自身再转 180° 与翻卡相抵，坐标不镜像，得直接给镜像渐变
     background-image: var(--default-kug-gradient-flip);
     transform: rotateY(180deg);
     text-align: center;
@@ -410,7 +408,6 @@ Teleport(to="body")
     }
   }
 
-  // 报名须知压在正文之上，有 signup.md 才出现
   .card-signup {
     position: absolute;
     inset: auto 0 0;
@@ -425,7 +422,7 @@ Teleport(to="body")
     background-color: var(--default-dark-white);
     position: relative;
     width: 100%;
-    height: 100%;
+    margin-bottom: 7px;
     overflow: hidden;
 
     .default-shadow-mini-inset();
@@ -434,6 +431,7 @@ Teleport(to="body")
       height: auto;
       min-height: 4em;
       max-height: 18em;
+      margin-bottom: 0;
     }
   }
 
@@ -484,7 +482,6 @@ Teleport(to="body")
     }
   }
 }
-// 手机端的卡背彩蛋：暗色压住其余区域，主体是明信片背面
 .peek {
   position: fixed;
   inset: 0;

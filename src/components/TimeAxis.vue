@@ -69,7 +69,7 @@ const TAU = 0.8
 
 const fitted = ref(1)
 
-/** 随滚轮缩放指数变化：放大趋近基准的 1.2 倍，缩小趋近一半，初始铺满时正好一倍 */
+/** 粗细随缩放指数变化：放大趋近 1.2 倍，缩小趋近一半，铺满时为 1 */
 const bar = computed(() => {
   const zoomed = pxPerDay.value / (fitted.value || 1)
   return `${(BAR * (0.5 + 0.7 * (1 - Math.exp(-zoomed / TAU)))).toFixed(3)}em`
@@ -276,7 +276,6 @@ const away = (a: Activity) => {
   z-index: 2;
 }
 
-// 点若也用渐变会淹进轴里
 .axis-dot {
   position: relative;
   width: 100%;

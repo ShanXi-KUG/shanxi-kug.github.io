@@ -34,7 +34,7 @@ let armed = 0
 const bump = ref(0)
 let relax: ReturnType<typeof setTimeout>
 
-/** 到端点了：给一下回弹，但绝不把滚动交还给页面 */
+/** 到端点只回弹 */
 function nudge(dir: number) {
   bump.value = dir > 0 ? -18 : 18
   clearTimeout(relax)
@@ -65,7 +65,7 @@ function onWheel(e: WheelEvent) {
   if (stacked.value || e.target !== edge.value) return
   const dir = Math.sign(e.deltaY || e.deltaX)
   if (!dir) return
-  // 檐口内的滚轮只归卡流，到头也不放行，否则整页会跟着往下走
+  // 到头也拦住，否则整页会跟着滚
   e.preventDefault()
   if (canStep(dir)) step(dir)
   else nudge(dir)
@@ -109,7 +109,6 @@ watch(() => props.items.length, () => (pos.value = 0))
   width: 100%;
   height: 100%;
   display: flex;
-  // 卡与卡之间留 2em，滑动时能看见彼此是分开的
   gap: 2em;
   translate: calc(var(--at, 0) * -1 * (100% + 2em) + var(--bump, 0px)) 0;
 
@@ -150,7 +149,6 @@ watch(() => props.items.length, () => (pos.value = 0))
   &.next { right: .64em }
 }
 
-// 手机端纵向堆叠，整片卡流内层滚动
 .deck.stacked {
   overflow: visible;
 

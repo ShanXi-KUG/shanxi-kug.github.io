@@ -9,11 +9,14 @@ export const useTheme = defineStore('theme', () => {
   const system = usePreferredDark()
   const dark = computed(() => (mode.value === 'system' ? system.value : mode.value === 'dark'))
 
-  // 跟随系统时不写属性，交给 prefers-color-scheme
+  const bar = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
+
+  // 跟随系统时不写属性，交给 prefers-color-scheme；手机地址栏颜色要跟着换
   watchEffect(() => {
     const root = document.documentElement
     if (mode.value === 'system') root.removeAttribute('data-theme')
     else root.dataset.theme = mode.value
+    if (bar) bar.content = dark.value ? '#1F242D' : '#F1F6FF'
   })
 
   const toggle = () => (mode.value = dark.value ? 'light' : 'dark')

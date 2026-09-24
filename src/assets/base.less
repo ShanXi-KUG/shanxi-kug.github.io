@@ -1,28 +1,7 @@
 @default-max-height: 9999px;
 
-/* color palette from <https://github.com/vuejs/theme> */
 :root {
   --kug-default-purple: #854efc;
-
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 
   --default-white: #E9EEF7;
   --default-black: #161B08;
@@ -61,8 +40,8 @@
 
   --default-kug-gradient: linear-gradient(120.98deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
 
-  // 卡背绕 Y 轴翻转 180 度，渐变角度要跟着镜像，正反面才是同一道光
-  --default-kug-gradient-flip: linear-gradient(59.02deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
+  // 正面渐变的左右镜像，卡背用
+  --default-kug-gradient-flip: linear-gradient(239.02deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
 
   // 压在渐变上的前景色，两套主题下都得是浅的，不跟随调色板翻转
   --default-on-gradient: #F6F8FF;
@@ -87,8 +66,7 @@
   .use-purple-when-not-support-bg-clip();
 }
 
-// 注册为可插值属性，渐变才能平滑转动与淡入；
-// :root 上的 --default-kug-gradient 已在根元素代换完毕，改这几个量影响不到它
+// 注册后才能插值；--default-kug-gradient 在 :root 已代换，不受这几个量影响
 @property --kug-angle {
   syntax: "<angle>";
   inherits: true;
@@ -120,7 +98,6 @@
   }
 }
 
-// glint 类由 v-glint 添加、动画结束后移除，悬停与按压共用
 .use-glint(@rest: 1) {
   --kug-lit: @rest;
   transition: --kug-lit .3s ease;
@@ -141,7 +118,6 @@
   }
 }
 
-// 按 --kug-lit 在底色 @ink 与渐变之间混合
 .use-glint-paint(@ink: transparent) {
   background-image: linear-gradient(
     var(--kug-angle),
@@ -160,7 +136,6 @@
   .use-purple-when-not-support-bg-clip();
 }
 
-// 颜色沿文字流过去再流回，与 glint 的转角区分
 .use-flow-text() {
   @supports (background-clip: text) {
     background-image: linear-gradient(120.98deg, #844EFE, #E93D75 50%, #844EFE);
@@ -184,7 +159,7 @@
 }
 
 @font-face {
-  // 由于部分字体还是太粗，所以设置一个特殊的font-weight，用来显示细的字体
+  // 字重 233 专供比 Light 更细的字
   font-family: "HarmonyOS Sans SC";
   src:
           local("Microsoft YaHei UI Light"),
@@ -226,35 +201,6 @@
   src:
           url("/fonts/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.ttf");
   font-weight: 500;
-}
-
-/* semantic color variables for this project */
-:root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--default-white);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--default-black);
-  }
 }
 
 :root {
@@ -441,8 +387,8 @@ body {
   height: 100vh;
   min-width: 100vw;
   width: 100vw;
-  color: var(--color-text);
-  background: var(--color-background);
+  color: var(--default-black);
+  background: var(--default-white);
   line-height: 1.6;
   font-family: "HarmonyOS Sans SC",
     "Microsoft YaHei UI Light",
@@ -468,9 +414,6 @@ body {
   margin: 0;
   border: none;
 }
-
-// 强制触发less计算
-.c(@param) { @return: @param; }
 
 .use-default-hover {
   &:hover {
@@ -548,18 +491,6 @@ body {
 }
 
 // 系统暗色与手动切换是两条独立路径，规则得同时挂上
-.when-dark(@rules) {
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) & {
-      @rules();
-    }
-  }
-
-  :root[data-theme="dark"] & {
-    @rules();
-  }
-}
-
 // 移动设备 - [450, 768)
 @mobile-min: 456px;
 // 平板设备 - [768, 1024)

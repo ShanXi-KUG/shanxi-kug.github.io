@@ -1,0 +1,37 @@
+name: 依赖巡检
+
+on:
+  schedule:
+    - cron: '23 4 1,16 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 升到最新
+        run: npx --yes npm-check-updates -u && npm install
+
+      # 构建不过就不开 PR
+      - name: 类型检查与构建
+        run: npm run build
+
+      - name: 有改动就开 PR，不碰主分支
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/bump-deps
+          delete-branch: true
+          commit-message: 'chore(deps): bump to latest.'
+          title: 'chore(deps): bump to latest.'
+          body: 半月一次的依赖巡检。已在本分支跑过 `npm run build`，绿了才开的 PR。

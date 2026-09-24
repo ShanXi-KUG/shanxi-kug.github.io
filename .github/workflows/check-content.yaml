@@ -1,0 +1,28 @@
+name: 活动内容检查
+
+on:
+  push:
+    paths:
+      - 'src/activity/**'
+      - 'scripts/check-content.mjs'
+  pull_request:
+    paths:
+      - 'src/activity/**'
+      - 'scripts/check-content.mjs'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - run: npm install
+
+      - name: 校验 frontmatter 与资料引用
+        run: node scripts/check-content.mjs

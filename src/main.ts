@@ -1,12 +1,12 @@
 import './assets/main.less'
 
-import { createApp } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import { createPinia } from 'pinia'
+import { createApp } from 'vue'
 
 import App from './App.vue'
 
-const app = createApp(App)
+// 右键留给翻卡背，屏蔽系统菜单
+useEventListener(window, 'contextmenu', (e) => e.preventDefault())
 
-app.use(createPinia())
-
-app.mount('#app')
+createApp(App).use(createPinia()).mount('#app')

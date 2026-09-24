@@ -213,3 +213,9 @@
   }
 
 }
+// 卡流平移与弹窗出入共用的缓动：起步快、收尾稳，不回弹
+@ease-slide: cubic-bezier(.22, 1, .36, 1);
+
+.use-slide-transition(@props: transform) {
+  transition: @props .52s @ease-slide;
+}

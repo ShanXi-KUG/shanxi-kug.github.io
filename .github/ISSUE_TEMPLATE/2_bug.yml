@@ -1,0 +1,43 @@
+name: 页面问题
+description: 显示错乱、交互异常、链接失效
+title: '[问题] '
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 问题描述
+      description: 看到了什么，本应是什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开最新活动
+        2. 右键明信片
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: 设备
+      options: [电脑, 平板, 手机]
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: 浏览器与版本
+      placeholder: Chrome 140、微信内置浏览器
+    validations:
+      required: true
+
+  - type: textarea
+    id: shot
+    attributes:
+      label: 截图或录屏

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 提问与交流
+    url: https://github.com/ShanXi-KUG/shanxi-kug.github.io/discussions
+    about: 使用问题、活动想法，来讨论区
+  - name: 维护指南
+    url: https://github.com/ShanXi-KUG/shanxi-kug.github.io/blob/main/docs/%E7%BB%B4%E6%8A%A4%E6%8C%87%E5%8D%97.md
+    about: 发布、修改、归档活动的写法

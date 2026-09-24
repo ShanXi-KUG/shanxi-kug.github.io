@@ -5,33 +5,29 @@ on:
     - cron: '23 4 1,16 * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   bump:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '22'
+          node-version: lts/*
 
-      - name: 升到最新
-        run: npx --yes npm-check-updates -u && npm install
+      - run: npx --yes npm-check-updates -u && npm install
 
       # 构建不过就不开 PR
-      - name: 类型检查与构建
-        run: npm run build
+      - run: npm run build
 
-      - name: 有改动就开 PR，不碰主分支
-        uses: peter-evans/create-pull-request@v7
+      # 组织禁止默认令牌开 PR，改用组织令牌
+      - uses: peter-evans/create-pull-request@v8
         with:
+          token: ${{ secrets.SHANXIKUG }}
           branch: chore/bump-deps
           delete-branch: true
+          labels: dependencies
           commit-message: 'chore(deps): bump to latest.'
           title: 'chore(deps): bump to latest.'
-          body: 半月一次的依赖巡检。已在本分支跑过 `npm run build`，绿了才开的 PR。
+          body: 半月一次的依赖巡检，已构建通过。

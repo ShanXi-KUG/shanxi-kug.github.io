@@ -1,0 +1,66 @@
+name: 活动投稿
+description: 不用 git 也能发布活动，由维护者代为上架
+title: '[活动] '
+labels: [活动]
+body:
+  - type: markdown
+    attributes:
+      value: 会用 git 的话，照[维护指南](https://github.com/ShanXi-KUG/shanxi-kug.github.io/blob/main/docs/%E7%BB%B4%E6%8A%A4%E6%8C%87%E5%8D%97.md)直接提 PR 更快。
+
+  - type: input
+    id: title
+    attributes:
+      label: 活动名称
+    validations:
+      required: true
+
+  - type: input
+    id: during
+    attributes:
+      label: 活动时间
+      placeholder: 2026-10-18 19:00 至 21:30
+    validations:
+      required: true
+
+  - type: input
+    id: enroll
+    attributes:
+      label: 报名时间
+      placeholder: 2026-09-20 至 2026-10-16
+
+  - type: input
+    id: venue
+    attributes:
+      label: 线下地点
+
+  - type: textarea
+    id: online
+    attributes:
+      label: 线上渠道
+      description: 一行一个，名称加链接
+      placeholder: 哔哩哔哩直播间 https://live.bilibili.com/
+
+  - type: input
+    id: signup
+    attributes:
+      label: 报名链接
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: 活动介绍
+      description: 讲题、讲师、内容简介；图片可直接拖入
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 主办方同意公开以上信息
+          required: true
+        - label: 不含手机号、证件号等个人隐私
+          required: true
+        - label: 图片等资料有权使用
+          required: true

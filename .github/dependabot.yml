@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: cron
+      cronjob: '41 5 1,16 * *'
+    commit-message:
+      prefix: 'chore(.github)'

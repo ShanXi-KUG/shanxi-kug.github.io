@@ -7,7 +7,8 @@
 |    `src/content/`     | 构建期读取 `src/activity/**` 的 markdown，推算阶段与排序 |
 |  `src/components/`   |      页眉、页脚、时间轴、卡流、明信片、弹窗等组件      |
 |    `src/stores/`     |   pinia：主题、布局（手机 / 减弱动效）、卡流聚焦   |
-| `src/assets/*.less` |     色板、阴影、圆角、渐变与动效 mixin，经 Vite 注入每个组件     |
+| `src/assets/mixins.less` | 混入，经 Vite 注入每个组件，本身不产出 CSS |
+|  `src/assets/main.less`  | 色板、字体、全局规则，只由 `main.ts` 引入一次 |
 |  `src/glint.ts`   |        `v-glint`：悬停或按下时播放一次渐变动效        |
 
 ## 约定
@@ -20,7 +21,7 @@
 
 ## 分支
 
-`main` 为开发分支，合入 `release` 后 CI 自动部署到 `gh-pages`。
+`main` 为开发分支。`./publish-page.sh` 把已推送的 `main` 快进到 `release`，CI 随即部署到 `gh-pages`；不能快进时脚本直接失败。
 
 ## 待验证
 

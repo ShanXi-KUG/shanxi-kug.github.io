@@ -108,13 +108,13 @@ node scripts/check-content.mjs
 npm run build
 ```
 
-Develop on `main`; merging into `release` deploys.
+Develop on `main`; `./publish-page.sh` fast-forwards `release`, which deploys.
 
 |    Workflow    |           Trigger            |                Job                |
 |:--------------:|:----------------------------:|:---------------------------------:|
 | Build & deploy |      push to `release`       |      Deploy to GitHub Pages       |
 | Content check  | changes in `src/activity/` | Check fields, dates and assets |
-|   Dep bump    |     1st and 16th monthly     |  Bump, build, open a PR if green  |
+|   Dep bump    |     1st and 16th monthly     | Bump npm deps and Actions, open a PR if green |
 
 ## Contact
 

@@ -108,13 +108,13 @@ node scripts/check-content.mjs
 npm run build
 ```
 
-`main` 开发，合入 `release` 自动部署。
+`main` 开发，`./publish-page.sh` 快进到 `release` 后自动部署。
 
 |  流水线  |          触发           |          职责          |
 |:-----:|:---------------------:|:--------------------:|
 | 构建发布  |    push 到 `release`    |   部署到 GitHub Pages   |
 | 内容检查  | 改动 `src/activity/` | 校验字段、日期与资料引用 |
-| 依赖巡检  |    每月 1 日、16 日    |   升级并构建，通过则开 PR   |
+| 依赖巡检  |    每月 1 日、16 日    | 升级 npm 依赖与 Actions，构建通过则开 PR |
 
 ## 联系我们
 

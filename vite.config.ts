@@ -1,20 +1,18 @@
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
   css: {
     preprocessorOptions: {
       less: {
-        additionalData: `@import (once) 'src/assets/main';`,
-        javascriptEnabled: true,
+        additionalData: `@import (once) 'src/assets/mixins';`,
       },
     },
   },
   resolve: {
     alias: {
       '@': '/src',
-    }
-  }
+    },
+  },
 })

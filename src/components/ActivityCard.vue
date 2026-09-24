@@ -119,8 +119,6 @@ Teleport(to="body")
 </template>
 
 <style lang="less" scoped>
-@import "@/assets/animation";
-
 .card {
   position: relative;
   width: 100%;

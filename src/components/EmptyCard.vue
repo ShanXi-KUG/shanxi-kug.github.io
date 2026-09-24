@@ -18,8 +18,6 @@ const flipped = ref(false)
 </template>
 
 <style lang="less" scoped>
-@import "@/assets/animation";
-
 .blank {
   position: relative;
   width: 100%;

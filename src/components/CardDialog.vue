@@ -20,8 +20,6 @@ Transition(name="veil")
 </template>
 
 <style lang="less" scoped>
-@import "@/assets/animation";
-
 .veil {
   position: fixed;
   inset: 0;

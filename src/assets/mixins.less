@@ -1,0 +1,259 @@
+.use-purple-when-not-support-bg-clip() {
+  @supports not (background-clip: text) {
+    background-image: none !important;
+    color: var(--kug-default-purple) !important;
+  }
+}
+
+.use-default-gradient-text() {
+  @supports (background-clip: text) {
+    background-image: var(--default-kug-gradient);
+    background-clip: text;
+    color: transparent;
+  }
+  .use-purple-when-not-support-bg-clip();
+}
+
+.use-glint(@rest: 1) {
+  --kug-lit: @rest;
+  transition: --kug-lit .3s ease;
+
+  &.glint {
+    --kug-lit: 1;
+    animation: --kug-glint 1.1s ease-in-out;
+
+    @media (width < 768px) {
+      animation-duration: .5s;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      --kug-lit: 1;
+    }
+  }
+}
+
+.use-glint-paint(@ink: transparent) {
+  background-image: linear-gradient(
+    var(--kug-angle),
+    color-mix(in oklab, #844EFE calc(var(--kug-lit) * 100%), @ink),
+    var(--kug-focus),
+    color-mix(in oklab, #E93D75 calc(var(--kug-lit) * 100%), @ink)
+  );
+}
+
+.use-glint-text(@ink: transparent) {
+  @supports (background-clip: text) {
+    .use-glint-paint(@ink);
+    background-clip: text;
+    color: transparent;
+  }
+  .use-purple-when-not-support-bg-clip();
+}
+
+.use-flow-text() {
+  @supports (background-clip: text) {
+    background-image: linear-gradient(120.98deg, #844EFE, #E93D75 50%, #844EFE);
+    background-size: 200% 100%;
+    background-clip: text;
+    color: transparent;
+  }
+  .use-purple-when-not-support-bg-clip();
+
+  &.glint {
+    animation: --kug-flow 1.1s ease-in-out;
+  }
+}
+
+.harmony(@weight; @file; @local: "HarmonyOS_Sans_SC_@{file}") {
+  @font-face {
+    font-family: "HarmonyOS Sans SC";
+    src: local(@local), url("/fonts/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_@{file}.woff2") format("woff2");
+    font-weight: @weight;
+    // 单个字重 4MB，等下载时先用后备字体，别让文字空白
+    font-display: swap;
+  }
+}
+
+.default-shadow-inset() {
+  box-shadow: var(--inset-bottom-right-white-shadow),
+  var(--inset-top-left-black-shadow);
+}
+
+.default-shadow-mini-inset() {
+  box-shadow: var(--mini-inset-bottom-right-white-shadow),
+  var(--mini-inset-top-left-black-shadow);
+}
+
+.default-shadow-outset() {
+  box-shadow: var(--outset-top-left-white-shadow),
+  var(--outset-bottom-right-black-shadow);
+}
+
+.default-shadow-outset-reversed-only-black() {
+  box-shadow:
+          calc(var(--shadow-offset-x) * var(--shadow-neg-x-deviation) * -1)
+          calc(var(--shadow-offset-y) * var(--shadow-neg-y-deviation))
+          var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-black);
+}
+
+.default-shadow-mini-outset() {
+  box-shadow: var(--mini-outset-top-left-white-shadow),
+  var(--mini-outset-bottom-right-black-shadow);
+}
+
+.default-shadow-inset-outset() {
+  box-shadow: var(--inset-bottom-right-white-shadow),
+  var(--inset-top-left-black-shadow),
+  var(--outset-top-left-white-shadow),
+  var(--outset-bottom-right-black-shadow);
+}
+
+.default-shadow-mini-inset-outset() {
+  box-shadow: var(--mini-inset-bottom-right-white-shadow),
+  var(--mini-inset-top-left-black-shadow),
+  var(--mini-outset-top-left-white-shadow),
+  var(--mini-outset-bottom-right-black-shadow);
+}
+
+.default-shadow-selected-all-light() {
+  box-shadow: var(--inset-bottom-right-white-shadow),
+  var(--inset-top-left-white-shadow),
+  var(--outset-top-left-white-shadow),
+  var(--outset-bottom-right-white-shadow);
+}
+
+.default-shadow-mini-selected-all-light() {
+  box-shadow: var(--mini-inset-bottom-right-white-shadow),
+  var(--mini-inset-top-left-white-shadow),
+  var(--mini-outset-top-left-white-shadow),
+  var(--mini-outset-bottom-right-white-shadow);
+}
+
+.default-shadow-active-all-dark() {
+  box-shadow: var(--inset-bottom-right-black-shadow),
+  var(--inset-top-left-black-shadow),
+  var(--outset-top-left-black-shadow),
+  var(--outset-bottom-right-black-shadow);
+}
+
+.default-shadow-mini-active-all-dark() {
+  box-shadow: var(--mini-inset-bottom-right-black-shadow),
+  var(--mini-inset-top-left-black-shadow),
+  var(--mini-outset-top-left-black-shadow),
+  var(--mini-outset-bottom-right-black-shadow);
+}
+
+.use-border-radius() {
+  border-radius: var(--default-border-radius);
+}
+
+.use-mini-border-radius() {
+  border-radius: var(--mini-default-border-radius);
+}
+
+.use-half-border-radius() {
+  border-radius: var(--default-half-border-radius);
+}
+
+.use-mini-half-border-radius() {
+  border-radius: var(--mini-default-half-border-radius);
+}
+
+.use-leaf-border-radius() {
+  border-radius: var(--default-leaf-border-radius);
+}
+
+.use-mini-leaf-border-radius() {
+  border-radius: var(--mini-default-leaf-border-radius);
+}
+
+.use-half-leaf-border-radius() {
+  border-radius: var(--default-half-leaf-border-radius);
+}
+
+.use-mini-half-leaf-border-radius() {
+  border-radius: var(--mini-default-half-leaf-border-radius);
+}
+
+.use-default-border() {
+  border: var(--default-border);
+}
+
+.use-default-mini-border() {
+  border: 1px fade(#161B08, 3.33%) solid;
+}
+
+.use-default-transition() {
+  transition: all 0.2s ease-in-out;
+}
+
+.disable-list-style() {
+  ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.disable-browser-scrollbar() {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    display: none;
+  }
+
+  scrollbar-width: none;
+}
+
+.disable-link-decoration() {
+  a, a:hover, a:visited, a:active {
+    text-decoration: none;
+  }
+}
+
+// 深色只改调色板与两条阴影基色，派生变量与全部 mixin 原样复用
+.use-dark-palette() {
+  --default-white: #171B22;
+  --default-light-white: #1F242D;
+  --default-poor-blue-white: #1C212A;
+  --default-dark-white: #12161C;
+  --default-black: #E8ECF5;
+  --default-half-gray: fade(#E8ECF5, 60%);
+  --default-white-groove: fade(#E8ECF5, 22%);
+  --default-black-groove: fade(#0B0E13, 45%);
+
+  // 深色下高光必须压到极淡，否则拟物凸起会糊成一片白
+  --shadow-white: rgba(255, 255, 255, .055);
+  --shadow-black: rgba(0, 0, 0, .55);
+}
+
+// 以 --offset 驱动的动画帧，配合 main.less 里的 --offset-* 关键帧使用
+.transition(@from, @to) {
+  --offset: 1;
+  @return: calc(calc(@from) * (var(--offset) - 0) + calc(@to) * (1 - var(--offset)));
+}
+
+// 例：.animation(opacity; 0; 1)
+.animation(@key, @from, @to, @animation: --offset-easeOutElastic, @duration: .3s, @delay: 0s) {
+  @{key}: .transition(@from, @to)[@return];
+  animation: @animation @duration ease forwards;
+  animation-delay: @delay;
+}
+
+// 例：.animation-func(transform; rotateY; 0deg; -45deg)
+.animation-func(@key, @func, @from, @to, @animation: --offset-easeOutElastic, @duration: .3s, @delay: 0s) {
+  @{key}: ~'@{func}('.transition(@from, @to)[@return]~')';
+  animation: @animation @duration ease forwards;
+  animation-delay: @delay;
+}
+
+// 起步快、收尾稳、不回弹
+@ease-slide: cubic-bezier(.22, 1, .36, 1);
+
+.use-slide-transition(@props: transform) {
+  transition: @props .52s @ease-slide;
+}

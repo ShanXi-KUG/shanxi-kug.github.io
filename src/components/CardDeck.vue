@@ -92,8 +92,6 @@ watch(() => props.items.length, () => (pos.value = 0))
 </template>
 
 <style lang="less" scoped>
-@import "@/assets/animation";
-
 .deck {
   position: relative;
   width: 100%;

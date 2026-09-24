@@ -1,13 +1,373 @@
-@import (once) 'base';
-@import (once) 'animation';
+// 混入由 vite.config.ts 注入，这里再导入会让每个混入调用执行两次
+
+:root {
+  --kug-default-purple: #854efc;
+
+  --default-white: #E9EEF7;
+  --default-black: #161B08;
+  --default-light-white: #F1F6FF;
+  --default-poor-blue-white: #ebf0ff;
+  --default-dark-white: #E0E5ED;
+  --default-half-gray: fade(#161B08, 66.7%);
+  --default-white-groove: fade(#161B08, 27.5%);
+  --default-black-groove: fade(#E9EEF7, 27.5%);
+  --default-star: radial-gradient(50% 50%, rgba(0, 213, 255, 1) 0%, rgba(0, 26, 255, 0.01) 100%);
+  --default-star-trails: linear-gradient(to right, rgba(0, 255, 221, 1) 0%, rgba(0, 161, 247, 1) 54%, rgba(0, 149, 255, 0.98) 78%, rgba(0, 98, 255, 0.25) 100%);
+
+  --default-white-blue: #29A6FF;
+  --default-white-red: #FC1414;
+  --default-white-green: #15ED41;
+  --default-white-yellow: #FFE600;
+  --default-white-purple: #2934FF;
+
+  --default-white-blue-rgb: red(#29A6FF) green(#29A6FF) blue(#29A6FF);
+  --default-white-red-rgb: red(#FC1414) green(#FC1414) blue(#FC1414);
+  --default-white-green-rgb: red(#15ED41) green(#15ED41) blue(#15ED41);
+  --default-white-yellow-rgb: red(#FFE600) green(#FFE600) blue(#FFE600);
+  --default-white-purple-rgb: red(#2934FF) green(#2934FF) blue(#2934FF);
+
+  --default-black-blue: #296DFF;
+  --default-black-red: #FC4714;
+  --default-black-green: #0AFAB6;
+  --default-black-yellow: #FFAA00;
+  --default-black-purple: #4000FF;
+
+  --default-black-blue-rgb: red(#296DFF) green(#296DFF) blue(#296DFF);
+  --default-black-red-rgb: red(#FC4714) green(#FC4714) blue(#FC4714);
+  --default-black-green-rgb: red(#0AFAB6) green(#0AFAB6) blue(#0AFAB6);
+  --default-black-yellow-rgb: red(#FFAA00) green(#FFAA00) blue(#FFAA00);
+  --default-black-purple-rgb: red(#4000FF) green(#4000FF) blue(#4000FF);
+
+  --default-kug-gradient: linear-gradient(120.98deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
+
+  // 正面渐变的左右镜像，卡背用
+  --default-kug-gradient-flip: linear-gradient(239.02deg, rgba(132, 78, 254, 1) 0%, rgba(233, 61, 117, 1) 100%);
+
+  // 压在渐变上的前景色，两套主题下都得是浅的，不跟随调色板翻转
+  --default-on-gradient: #F6F8FF;
+  --default-on-gradient-weak: rgba(246, 248, 255, .72);
+}
+
+:root {
+  --shadow-black: rgba(0, 0, 0, .2);
+  --shadow-white: rgba(255, 255, 255, .8);
+
+  --shadow-x-deviation: 1;
+  --shadow-y-deviation: 1;
+
+  --shadow-neg-x-deviation: -1;
+  --shadow-neg-y-deviation: -1;
+
+  --shadow-offset-x: .15em;
+  --mini-shadow-offset-x: .07em;
+
+  --shadow-offset-y: .15em;
+  --mini-shadow-offset-y: .07em;
+
+  --shadow-blur-radius: .15em;
+  --mini-shadow-blur-radius: .07em;
+
+  --shadow-spread-radius: 0;
+  --mini-shadow-spread-radius: 0;
+
+  --inset-bottom-right-white-shadow: calc(var(--shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-white) inset;
+  --mini-inset-bottom-right-white-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-white) inset;
+
+  --inset-top-left-black-shadow: calc(var(--shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-black) inset;
+  --mini-inset-top-left-black-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-black) inset;
+
+  --outset-top-left-white-shadow: calc(var(--shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-white);
+  --mini-outset-top-left-white-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-white);
+
+  --outset-bottom-right-black-shadow: calc(var(--shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-black);
+  --mini-outset-bottom-right-black-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-black);
+
+  --inset-top-left-white-shadow: calc(var(--shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-white) inset;
+  --mini-inset-top-left-white-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-white) inset;
+
+  --outset-bottom-right-white-shadow: calc(var(--shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-white);
+  --mini-outset-bottom-right-white-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-white);
+
+  --inset-bottom-right-black-shadow: calc(var(--shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-black) inset;
+  --mini-inset-bottom-right-black-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-black) inset;
+
+  --outset-top-left-black-shadow: calc(var(--shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--shadow-blur-radius) var(--shadow-spread-radius) var(--shadow-black);
+  --mini-outset-top-left-black-shadow: calc(var(--mini-shadow-offset-x) * var(--shadow-neg-x-deviation)) calc(var(--mini-shadow-offset-y) * var(--shadow-neg-y-deviation)) var(--mini-shadow-blur-radius) var(--mini-shadow-spread-radius) var(--shadow-black);
+}
+
+:root {
+  --default-border-radius: 2em;
+  --default-half-border-radius: calc(var(--default-border-radius)/2);
+  --mini-default-border-radius: .5em;
+  --mini-default-half-border-radius: calc(var(--mini-default-border-radius)/2);
+
+  // leaf 为叶形：只有左上与右下是圆角；mini 用于小块
+  --default-leaf-border-radius: var(--default-border-radius) / var(--default-border-radius) 0;
+  --mini-default-leaf-border-radius: var(--mini-default-border-radius) / var(--mini-default-border-radius) 0;
+  --default-half-leaf-border-radius: var(--default-half-border-radius) / var(--default-half-border-radius) 0;
+  --mini-default-half-leaf-border-radius: var(--mini-default-half-border-radius) / var(--mini-default-half-border-radius) 0;
+}
+
+:root {
+  --default-border: 2px solid var(--default-white-groove);
+  --default-mini-border: 1px solid var(--default-white-groove);
+}
+
+// 注册后才能插值；--default-kug-gradient 在 :root 已代换，不受这几个量影响
+@property --kug-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 120.98deg;
+}
+
+@property --kug-focus {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
+@property --kug-lit {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@keyframes --kug-glint {
+  50% {
+    --kug-angle: 240.98deg;
+    --kug-focus: 18%;
+  }
+}
+
+@keyframes --kug-flow {
+  50% {
+    background-position: 100% 0;
+  }
+}
+
+@keyframes --offset-easeOutElastic {
+  0% {
+    --offset: 1;
+  }
+
+  16% {
+    --offset: -0.3227;
+  }
+
+  28% {
+    --offset: 0.1312;
+  }
+
+  44% {
+    --offset: -0.0463;
+  }
+
+  59% {
+    --offset: 0.0164;
+  }
+
+  73% {
+    --offset: -0.005799;
+  }
+
+  88% {
+    --offset: 0.002;
+  }
+
+  100% {
+    --offset: 0;
+  }
+
+}
+
+
+@keyframes --offset-easeInOutElastic {
+  0% {
+    --offset: 1.0;
+  }
+
+  4% {
+    --offset: 0.9992;
+  }
+
+  8% {
+    --offset: 0.999;
+  }
+
+  18% {
+    --offset: 1.0051999;
+  }
+
+  20% {
+    --offset: 1.0039;
+  }
+
+  28% {
+    --offset: 0.9765;
+  }
+
+  30% {
+    --offset: 0.9761;
+  }
+
+  38% {
+    --offset: 1.0927;
+  }
+
+  40% {
+    --offset: 1.1175;
+  }
+
+  60% {
+    --offset: -0.1175;
+  }
+
+  62% {
+    --offset: -0.0926999;
+  }
+
+  70% {
+    --offset: 0.0239;
+  }
+
+  72% {
+    --offset: 0.023499;
+  }
+
+  80% {
+    --offset: -0.0039;
+  }
+
+  82% {
+    --offset: -0.005199;
+  }
+
+  90% {
+    --offset: 0.0003;
+  }
+
+  92% {
+    --offset: 0.00099;
+  }
+
+  100% {
+    --offset: .0;
+  }
+
+}
+
+@keyframes --offset-easeInOutBounce {
+  0% {
+    --offset: 1.0;
+  }
+
+  2% {
+    --offset: 0.9923;
+  }
+
+  4% {
+    --offset: 0.9967;
+  }
+
+  10% {
+    --offset: 0.97123;
+  }
+
+  14% {
+    --offset: 0.9902;
+  }
+
+  22% {
+    --offset: 0.8758;
+  }
+
+  32% {
+    --offset: 0.99;
+  }
+
+  42% {
+    --offset: 0.5968;
+  }
+
+  50% {
+    --offset: .5;
+  }
+
+  58% {
+    --offset: 0.40321;
+  }
+
+  68% {
+    --offset: .009899;
+  }
+
+  78% {
+    --offset: 0.1242;
+  }
+
+  86% {
+    --offset: 0.0098;
+  }
+
+  90% {
+    --offset: .03012;
+  }
+
+  96% {
+    --offset: .003299;
+  }
+
+  98% {
+    --offset: .007699;
+  }
+
+  100% {
+    --offset: .0;
+  }
+
+}
+
+.harmony(300; Light);
+.harmony(400; Regular; "HarmonyOS_Sans_SC");
+.harmony(500; Medium);
+.harmony(700; Bold);
+.harmony(900; Black);
 
 html, :root {
   interpolate-size: allow-keywords;
 }
 
 body {
-  width: 100vw;
+  min-height: 100vh;
   height: 100vh;
+  min-width: 100vw;
+  width: 100vw;
+  color: var(--default-black);
+  background: var(--default-white);
+  line-height: 1.6;
+  font-family: "HarmonyOS Sans SC",
+    "Microsoft YaHei UI Light",
+    "Microsoft YaHei UI",
+    "微软雅黑 UI Light",
+    "微软雅黑",
+    -apple-system,
+    BlinkMacSystemFont,
+    Ubuntu,
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  margin: 0 auto;
+}
+
+* {
+  box-sizing: border-box;
+  // 效果全部自己写，清掉浏览器默认的盒模型差异
+  padding: 0;
+  margin: 0;
+  border: none;
 }
 
 #app {
@@ -19,6 +379,17 @@ body {
   height: 100%;
   box-sizing: border-box;
   position: relative;
+}
+
+// 系统暗色与手动切换是两条独立路径，规则得同时挂上
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    .use-dark-palette();
+  }
+}
+
+:root[data-theme="dark"] {
+  .use-dark-palette();
 }
 
 *[dev] {

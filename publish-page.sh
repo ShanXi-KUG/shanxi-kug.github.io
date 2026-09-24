@@ -1,11 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# 把已推送的 main 快进到 release，由 CI 部署；不能快进时直接失败，不做合并
+set -euo pipefail
 
-git pull
-git fetch --all
-
-git checkout release || git checkout -b release origin/release
-git merge --no-commit origin/main
-
-git push origin release
-
-git checkout main
+git fetch origin
+git push origin origin/main:refs/heads/release

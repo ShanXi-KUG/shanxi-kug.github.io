@@ -16,10 +16,18 @@ jobs:
         with:
           node-version: lts/*
 
-      - run: npx --yes npm-check-updates -u && npm install
-
-      # 构建不过就不开 PR
-      - run: npm run build
+      # 先全量升级；构建不过就退回只升次版本，别让一个不兼容的大版本卡住其余更新
+      - id: bump
+        run: |
+          if npx --yes npm-check-updates -u && npm install && npm run build; then
+            echo "scope=全部升到最新" >> "$GITHUB_OUTPUT"
+          else
+            git checkout -- package.json
+            npx --yes npm-check-updates -u --target minor
+            npm install
+            npm run build
+            echo "scope=有大版本升级后构建失败，本次只升次版本" >> "$GITHUB_OUTPUT"
+          fi
 
       # 组织禁止默认令牌开 PR，改用组织令牌
       - uses: peter-evans/create-pull-request@v8
@@ -30,4 +38,4 @@ jobs:
           labels: dependencies
           commit-message: 'chore(deps): bump to latest.'
           title: 'chore(deps): bump to latest.'
-          body: 半月一次的依赖巡检，已构建通过。
+          body: 半月一次的依赖巡检：${{ steps.bump.outputs.scope }}，已构建通过。

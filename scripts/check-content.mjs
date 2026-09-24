@@ -20,7 +20,7 @@ function checkDir(dir) {
 
   const text = readFileSync(card, 'utf8')
   const head = text.match(FRONT)
-  if (!head) return note(card, '没有 --- 包起来的 frontmatter')
+  if (!head) return note(card, '缺少 frontmatter')
 
   let data
   try {
@@ -30,13 +30,13 @@ function checkDir(dir) {
   }
 
   if (!data.title) note(card, '缺少 title')
-  if (!data.during) note(card, '缺少 during（活动时间跨度）')
+  if (!data.during) note(card, '缺少 during')
 
   for (const key of ['during', 'enroll']) {
     if (!data[key]) continue
     const [from, to] = span(data[key])
     if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()))
-      note(card, `${key} 的日期无法解析，照 2026-10-18T19:00:00+08:00 的样子写`)
+      note(card, `${key} 日期无法解析，应形如 2026-10-18T19:00:00+08:00`)
     else if (to < from) note(card, `${key} 的结束早于开始`)
   }
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useSwipe } from '@vueuse/core'
+import { ref, useTemplateRef } from 'vue'
 import type { Stage } from '@/content'
 
 const props = defineProps<{ stage: Stage }>()
@@ -12,10 +13,14 @@ function flip() {
   flipped.value = !flipped.value
   flipping.value = true
 }
+
+useSwipe(useTemplateRef('root'), {
+  onSwipeEnd: (_, dir) => (dir === 'left' || dir === 'right') && flip(),
+})
 </script>
 
 <template lang="pug">
-.blank(:class="{ still: stage !== 'new' }", @click="flip", @contextmenu.prevent="flip")
+.blank(ref="root", :class="{ still: stage !== 'new' }", @click="flip", @contextmenu.prevent="flip")
   .blank-flip(:class="{ flipped, flipping }", @animationend.self="flipping = false")
     .blank-face.front
       .blank-inner

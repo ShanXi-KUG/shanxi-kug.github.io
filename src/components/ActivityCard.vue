@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { useSwipe } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { computed, ref, toRef } from 'vue'
+import { computed, ref, toRef, useTemplateRef } from 'vue'
 import type { Activity } from '@/content'
 import { vGlint } from '@/glint'
 import { useSignup } from '@/signup'
@@ -17,9 +18,13 @@ const { stacked } = storeToRefs(useLayout())
 const reader = useReader()
 const { action, sign } = useSignup(toRef(() => props.activity))
 
-/** 触屏没有右键，点一下改为抬出卡背 */
+// 触屏没有右键：横滑翻卡，点一下抬出卡背
+useSwipe(useTemplateRef('root'), {
+  onSwipeEnd: (_, dir) => stacked.value && (dir === 'left' || dir === 'right') && flip(),
+})
+
 function tap(e: MouseEvent) {
-  if (stacked.value) reveal.value = true
+  if (stacked.value) flipped.value ? flip() : (reveal.value = true)
   else if (!(e.target as HTMLElement).closest('a')) reader.open(props.activity, 'detail')
 }
 
@@ -52,7 +57,7 @@ function track(e: PointerEvent, at: string) {
 </script>
 
 <template lang="pug">
-.card(@contextmenu.prevent="flip", @click="tap")
+.card(ref="root", @contextmenu.prevent="flip", @click="tap")
   .card-flip(:class="{ flipped, flipping }")
     .card-face.face-front
       .card-inner

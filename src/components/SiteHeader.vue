@@ -313,7 +313,7 @@ header#header {
 
 // 三栏等分，标题才不被返回键推偏
 .drawer-head {
-  height: 3.06em;
+  height: @header-height;
   flex: 0 0 auto;
   margin: 0 -4.4%;
   padding: 0 1.06em;

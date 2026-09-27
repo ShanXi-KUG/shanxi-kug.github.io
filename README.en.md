@@ -115,7 +115,8 @@ Every push to `main` builds and deploys to GitHub Pages.
 |:--------------:|:----------------------------:|:---------------------------------:|
 | Build & deploy |      push to `main`       |      Deploy to GitHub Pages       |
 | Content check  | changes in `src/activity/` | Check fields, dates and assets |
-|   Dep bump    |     1st and 16th monthly     | Bump npm deps and Actions, open a PR if green |
+|   Dep bump    |     1st and 16th monthly     | Bump npm deps; merge and deploy if green and conflict-free |
+| Dependabot merge | Dependabot bumps an Action | Merge if green and conflict-free |
 
 ## Contact
 

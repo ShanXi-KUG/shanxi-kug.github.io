@@ -20,7 +20,7 @@ function toTop(e: MouseEvent) {
 #back-to-top {
   display: flex;
   position: fixed;
-  // 与线上原版一致：宽 max(3%, 3em)、距右 3%、距底 9%
+  // 尺寸与位置沿用两年前的线上版
   width: max(3%, 3em);
   aspect-ratio: 1 / 1;
   background-color: var(--default-light-white);

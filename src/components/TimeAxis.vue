@@ -215,7 +215,9 @@ const away = (a: Activity) => {
   @keydown.right.prevent="pan(-60)",
   tabindex="0",
 )
-  .axis-line(:style="{ '--bar': bar }")
+  .axis-line(:class="{ faint: !dated.length }", :style="{ '--bar': bar }")
+  .axis-point.plain.origin(v-if="!dated.length")
+    .axis-dot
   template(v-for="p in placed", :key="p.a.id")
     .axis-point(
       v-if="p.inside",
@@ -457,5 +459,14 @@ const away = (a: Activity) => {
 // 标签被避让掉后连接线就悬空了
 .axis-point.bare::before {
   display: none;
+}
+
+.axis-line.faint {
+  opacity: .28;
+}
+
+.axis-point.origin {
+  --x: 0px;
+  cursor: default;
 }
 </style>

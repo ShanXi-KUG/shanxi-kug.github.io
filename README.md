@@ -99,6 +99,7 @@ src/activity/
 
 ## 开发
 
+<a href="https://github.com/ShanXi-KUG/shanxi-kug.github.io/actions/workflows/build-and-publish-to-gh-page.yaml"><img alt="deploy" src="https://img.shields.io/github/actions/workflow/status/ShanXi-KUG/shanxi-kug.github.io/build-and-publish-to-gh-page.yaml?branch=main&style=flat-square&labelColor=161B08&label=deploy&logo=githubactions&logoColor=white"></a>
 <a href="https://github.com/ShanXi-KUG/shanxi-kug.github.io/actions/workflows/check-content.yaml"><img alt="content" src="https://img.shields.io/github/actions/workflow/status/ShanXi-KUG/shanxi-kug.github.io/check-content.yaml?branch=main&style=flat-square&labelColor=161B08&label=content&logo=githubactions&logoColor=white"></a>
 
 ```bash
@@ -108,11 +109,11 @@ node scripts/check-content.mjs
 npm run build
 ```
 
-`main` 开发，`./publish-page.sh` 快进到 `release` 后自动部署。
+推送到 `main` 即自动构建并部署到 GitHub Pages。
 
 |  流水线  |          触发           |          职责          |
 |:-----:|:---------------------:|:--------------------:|
-| 构建发布  |    push 到 `release`    |   部署到 GitHub Pages   |
+| 构建发布  |    push 到 `main`    |   部署到 GitHub Pages   |
 | 内容检查  | 改动 `src/activity/` | 校验字段、日期与资料引用 |
 | 依赖巡检  |    每月 1 日、16 日    | 升级 npm 依赖与 Actions，构建通过则开 PR |
 

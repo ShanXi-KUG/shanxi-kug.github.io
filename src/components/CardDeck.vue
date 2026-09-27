@@ -85,7 +85,7 @@ watch(() => props.items.length, () => (pos.value = 0))
       .deck-slot(v-for="a in items", :key="a.id")
         ActivityCard(:activity="a")
     .deck-slot(v-else)
-      EmptyCard
+      EmptyCard(:stage="stage")
   template(v-if="!stacked && has")
     button.deck-arrow.prev(v-show="canPrev", @click="go(-1)", aria-label="上一张") ‹
     button.deck-arrow.next(v-show="canNext", @click="go(1)", aria-label="下一张") ›

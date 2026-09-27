@@ -21,7 +21,7 @@
 
 ## 分支
 
-`main` 为开发分支。`./publish-page.sh` 把已推送的 `main` 快进到 `release`，CI 随即部署到 `gh-pages`；不能快进时脚本直接失败。
+推送到 `main` 即由 CI 构建并部署到 `gh-pages`；PR 只构建不部署。
 
 ## 待验证
 

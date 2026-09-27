@@ -1,9 +1,9 @@
 <script setup lang="ts">
-defineProps<{ html?: string }>()
+defineProps<{ html?: string; full?: boolean }>()
 </script>
 
 <template lang="pug">
-.md(v-if="html", v-html="html")
+.md(v-if="html", :class="{ full }", v-html="html")
 .md.md-empty(v-else)
   span 正文尚未寄出
 </template>
@@ -32,6 +32,13 @@ defineProps<{ html?: string }>()
 
   // 底部淡出，示意下面还有
   mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2em), transparent 100%);
+
+  &.full {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    mask-image: none;
+  }
 
   :deep(p) {
     margin: 0 0 .66em;

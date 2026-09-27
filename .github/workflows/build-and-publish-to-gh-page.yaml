@@ -2,9 +2,9 @@ name: 构建发布
 
 on:
   push:
-    branches: [release]
+    branches: [main]
   pull_request:
-    branches: [release]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:

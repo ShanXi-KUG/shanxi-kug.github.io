@@ -99,6 +99,7 @@ Sorted by `weight`, descending, within a section. `sp: true` sorts across sectio
 
 ## Development
 
+<a href="https://github.com/ShanXi-KUG/shanxi-kug.github.io/actions/workflows/build-and-publish-to-gh-page.yaml"><img alt="deploy" src="https://img.shields.io/github/actions/workflow/status/ShanXi-KUG/shanxi-kug.github.io/build-and-publish-to-gh-page.yaml?branch=main&style=flat-square&labelColor=161B08&label=deploy&logo=githubactions&logoColor=white"></a>
 <a href="https://github.com/ShanXi-KUG/shanxi-kug.github.io/actions/workflows/check-content.yaml"><img alt="content" src="https://img.shields.io/github/actions/workflow/status/ShanXi-KUG/shanxi-kug.github.io/check-content.yaml?branch=main&style=flat-square&labelColor=161B08&label=content&logo=githubactions&logoColor=white"></a>
 
 ```bash
@@ -108,11 +109,11 @@ node scripts/check-content.mjs
 npm run build
 ```
 
-Develop on `main`; `./publish-page.sh` fast-forwards `release`, which deploys.
+Every push to `main` builds and deploys to GitHub Pages.
 
 |    Workflow    |           Trigger            |                Job                |
 |:--------------:|:----------------------------:|:---------------------------------:|
-| Build & deploy |      push to `release`       |      Deploy to GitHub Pages       |
+| Build & deploy |      push to `main`       |      Deploy to GitHub Pages       |
 | Content check  | changes in `src/activity/` | Check fields, dates and assets |
 |   Dep bump    |     1st and 16th monthly     | Bump npm deps and Actions, open a PR if green |
 

@@ -1,22 +1,20 @@
 <script setup lang="ts">
 import { onKeyStroke } from '@vueuse/core'
-import type { Activity } from '@/content'
+import { useReader } from '@/stores/reader'
 import ActivityCard from './ActivityCard.vue'
+import ActivityDetail from './ActivityDetail.vue'
 
-const props = defineProps<{ activity: Activity | null }>()
-const emit = defineEmits<{ close: [] }>()
+const reader = useReader()
 
-/** 详情另开标签页，靠 query 复原，省掉一整套路由 */
-const open = () => window.open(`${location.pathname}?activity=${encodeURIComponent(props.activity!.id)}`, '_blank')
-
-onKeyStroke('Escape', () => props.activity && emit('close'))
+onKeyStroke('Escape', () => reader.activity && reader.close())
 </script>
 
 <template lang="pug">
 Transition(name="veil")
-  .veil(v-if="activity", @click.self="emit('close')")
-    .veil-slot(@click="open", title="点击查看详情")
-      ActivityCard(:activity="activity")
+  .veil(v-if="reader.activity", @click.self="reader.close()")
+    ActivityDetail.veil-read(v-if="reader.view === 'detail'", :activity="reader.activity")
+    .veil-slot(v-else)
+      ActivityCard(:activity="reader.activity")
 </template>
 
 <style lang="less" scoped>
@@ -43,10 +41,6 @@ Transition(name="veil")
 
   .use-default-transition();
 
-  &:hover {
-    scale: 1.012;
-  }
-
   @media (width < 768px) {
     height: min(24em, 72vh);
   }
@@ -55,7 +49,7 @@ Transition(name="veil")
 .veil-enter-active, .veil-leave-active {
   transition: opacity .3s @ease-slide;
 
-  .veil-slot {
+  .veil-slot, .veil-read {
     .use-slide-transition(~"transform, opacity");
   }
 }
@@ -63,7 +57,7 @@ Transition(name="veil")
 .veil-enter-from, .veil-leave-to {
   opacity: 0;
 
-  .veil-slot {
+  .veil-slot, .veil-read {
     transform: translateY(1.2em) scale(.97);
   }
 }

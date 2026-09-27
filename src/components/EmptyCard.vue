@@ -1,20 +1,34 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { Stage } from '@/content'
+
+const props = defineProps<{ stage: Stage }>()
 
 const flipped = ref(false)
+const flipping = ref(false)
+
+function flip() {
+  if (props.stage !== 'new') return
+  flipped.value = !flipped.value
+  flipping.value = true
+}
 </script>
 
 <template lang="pug">
-.blank(:class="{ flipped }", @click="flipped = !flipped")
-  .blank-inner
+.blank(:class="{ still: stage !== 'new' }", @click="flip", @contextmenu.prevent="flip")
+  .blank-inner(:class="{ flipped, flipping }", @animationend.self="flipping = false")
     .blank-face.front
-      .blank-mark 下一场尚未寄出
-      .blank-hint 点一下，看看怎么发起
-    .blank-face.back
+      template(v-if="stage === 'new'")
+        .blank-mark 下一场尚未寄出
+        .blank-hint 点一下，看看怎么发起
+      template(v-else)
+        .blank-mark 还没有往期活动
+        .blank-hint 活动结束后自动归档到这里
+    .blank-face.back(v-if="stage === 'new'")
       ol
-        li 在 #[code activity/new/] 下新建一个目录
-        li 放一份 #[code card.md]，写上标题与日期
-        li 提交，页面自己就会出现
+        li 复制 #[code docs/模板/活动目录名/] 到 #[code src/activity/new/]
+        li 填写 #[code card.md]
+        li 提交，页面随之更新
 </template>
 
 <style lang="less" scoped>
@@ -41,11 +55,29 @@ const flipped = ref(false)
   height: 100%;
   transform-style: preserve-3d;
 
+  // 手机端卡流按内容取高，两面都是绝对定位，不给高度就塌成一条
+  @media (width < 768px) {
+    min-height: 12em;
+  }
+
   .use-slide-transition(transform);
 }
 
-.blank.flipped .blank-inner {
+.blank-inner.flipped {
   transform: rotateY(180deg);
+}
+
+// 与明信片一致：边转边缩，免得近端被容器裁掉
+.blank-inner.flipping {
+  animation: --blank-turn .52s @ease-slide;
+}
+
+@keyframes --blank-turn {
+  50% { scale: .84 }
+}
+
+.blank.still {
+  cursor: default;
 }
 
 .blank-face {

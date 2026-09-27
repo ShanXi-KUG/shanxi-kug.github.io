@@ -145,7 +145,6 @@ header#header {
           .use-glint-text();
         }
 
-        // 与首页「ShanXi Kotlin User Group」同一手法，线换成暗色
         &.lined::after {
           content: "";
           position: absolute;
@@ -435,8 +434,7 @@ header#header {
     inset: 0;
   }
 
-  // 各 svg 的墨迹占 viewBox 的比例不同（gh 铺满、qq 仅 28/36），
-  // 用 contain 会让 gh 显得最大，这里按墨迹反算，统一视觉尺寸
+  // 各图标墨迹占 viewBox 的比例不同，按墨迹反算尺寸，视觉上才一样大
   &.qq { mask: url("/icons/platforms/qq.svg") no-repeat center / 103% }
   &.mail { mask: url("/icons/platforms/mail.svg") no-repeat center / 93% }
   &.wx { mask: url("/icons/platforms/wx.svg") no-repeat center / 96% }

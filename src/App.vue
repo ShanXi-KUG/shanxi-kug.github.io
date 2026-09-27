@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useScroll, useUrlSearchParams} from "@vueuse/core";
+import {useScroll} from "@vueuse/core";
 import {computed, ref} from "vue";
 
 import CardDeck from "@/components/CardDeck.vue";
@@ -8,14 +8,16 @@ import CardDialog from "@/components/CardDialog.vue";
 import SiteFooter from "@/components/SiteFooter.vue";
 import SiteHeader from "@/components/SiteHeader.vue";
 import TimeAxis from "@/components/TimeAxis.vue";
-import {activities, history, upcoming, type Activity} from "@/content";
+import {history, upcoming, type Activity} from "@/content";
 import {useDecks} from "@/stores/decks";
+import {useReader} from "@/stores/reader";
 
 const body = ref<HTMLElement | null>(null);
 const main = ref<HTMLElement | null>(null);
 const home = ref<HTMLElement | null>(null);
 
 const decks = useDecks();
+const reader = useReader();
 const {y: outer} = useScroll(body);
 const {y: inner} = useScroll(main);
 
@@ -25,9 +27,6 @@ const showBackTop = computed(() => outer.value > 0 || inner.value / (home.value?
 const axisItems = [...upcoming, ...history].filter(
   (a, i, all) => all.findIndex((b) => b.id === a.id) === i,
 );
-
-const {activity: wanted} = useUrlSearchParams<{activity?: string}>("history");
-const picked = ref<Activity | null>(activities.find((a) => a.id === wanted) ?? null);
 
 function jump(a: Activity): void {
   const done = a.status === "已结束";
@@ -58,7 +57,7 @@ main#body(ref="body")
       #new-active-wrapper
         nav#time-axis-wrapper
           #axis-wrapper
-            TimeAxis(:items="axisItems", @jump="jump", @peek="picked = $event")
+            TimeAxis(:items="axisItems", @jump="jump", @peek="reader.open($event, 'card')")
         main#content-wrapper
           #card-wrapper
             #card-content
@@ -73,7 +72,7 @@ main#body(ref="body")
                 CardDeck(stage="history", :items="history")
   SiteFooter
   BackToTop(:show="showBackTop")
-  CardDialog(:activity="picked", @close="picked = null")
+  CardDialog
 </template>
 
 <style lang="less" scoped>
@@ -91,6 +90,8 @@ main#body(ref="body")
     overflow-x: hidden;
 
     @header-height: 3.88em;
+    // 锚点跳转也会滚外层
+    scroll-padding-top: @header-height;
 
     article#main {
       width: min(max(72%, 768px), 100%);
@@ -123,7 +124,7 @@ main#body(ref="body")
           height: 100%;
           &[dev] {background-color: #296DFF;}
           display: grid;
-          grid-template: "logo" 188fr "info" 30fr "temp" 116fr;
+          grid-template: "logo" 188fr "info" 30fr "temp" 116fr / minmax(0, 1fr);
 
           #title {
             &[dev] {background-color: #0AFAB6;}
@@ -157,6 +158,14 @@ main#body(ref="body")
               border: 1px var(--default-half-gray) solid;
               border-right: 0;
               border-left: 0;
+
+              @media (768px <= width < 1024px) {
+                width: auto;
+                max-width: 88%;
+                height: auto;
+                line-height: 1.9;
+                padding: .3em .5em;
+              }
 
               a#join-us {
                 font-weight: bold;
@@ -208,6 +217,10 @@ main#body(ref="body")
             place-items: center;
             flex: 1 1 auto;
             padding: 2.88em 0 4.44em;
+
+            @media (768px <= width < 1024px) {
+              padding-inline: 6%;
+            }
 
             p {
               margin: 0;
@@ -442,6 +455,7 @@ main#body(ref="body")
 
           nav#time-axis-wrapper {
             height: 3.34em !important;
+            min-height: 0 !important;
             position: relative !important;
             display: flex !important;
             place-items: flex-end !important;

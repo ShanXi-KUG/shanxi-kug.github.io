@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
-import { confetti } from '@/confetti'
+import { computed, ref, toRef } from 'vue'
 import type { Activity } from '@/content'
 import { vGlint } from '@/glint'
+import { useSignup } from '@/signup'
 import { useLayout } from '@/stores/layout'
+import { useReader } from '@/stores/reader'
 import MarkdownBody from './MarkdownBody.vue'
 
 const props = defineProps<{ activity: Activity }>()
@@ -12,12 +13,14 @@ const props = defineProps<{ activity: Activity }>()
 const flipped = ref(false)
 const flipping = ref(false)
 const reveal = ref(false)
-const layout = useLayout()
-const { stacked } = storeToRefs(layout)
+const { stacked } = storeToRefs(useLayout())
+const reader = useReader()
+const { action, sign } = useSignup(toRef(() => props.activity))
 
-/** 触屏没有右键，改成点一下把卡背整张抬出来 */
-function tap() {
+/** 触屏没有右键，点一下改为抬出卡背 */
+function tap(e: MouseEvent) {
   if (stacked.value) reveal.value = true
+  else if (!(e.target as HTMLElement).closest('a')) reader.open(props.activity, 'detail')
 }
 
 let ease: ReturnType<typeof setTimeout>
@@ -28,29 +31,6 @@ function flip() {
   flipping.value = true
   clearTimeout(ease)
   ease = setTimeout(() => (flipping.value = false), 620)
-}
-
-const LINK = /^\s*\[([^\]]*)]\(([^)]*)\)\s*$/
-
-/** action 留空时退回默认按钮，且不跳转 */
-const action = computed(() => {
-  const m = props.activity.action?.match(LINK)
-  return m ? { text: m[1], href: m[2] } : { text: '点我报名!', href: '#' }
-})
-
-const POP = [{ scale: 1 }, { scale: 0.86 }, { scale: 1.08 }, { scale: 1 }]
-
-/** 外链延后打开：新标签页会夺走焦点，本页的动效就看不到了 */
-function sign(e: MouseEvent) {
-  const pill = (e.currentTarget as HTMLElement).parentElement!
-  if (!layout.calm) {
-    pill.animate(POP, { duration: 460, easing: 'ease-out' })
-    confetti(pill)
-  }
-  e.preventDefault()
-  const { href } = action.value
-  if (href.startsWith('#')) return
-  setTimeout(() => open(href, '_blank', 'noopener'), 420)
 }
 
 const day = computed(() =>
@@ -84,13 +64,12 @@ function track(e: PointerEvent, at: string) {
           section.card-meta-wrap
             aside.card-meta
               .card-line(v-if="activity.venue", @pointermove="track($event, 'venue')")
-                p 线下渠道：
-                  a {{ activity.venue }}
+                p 线下渠道：{{ activity.venue }}
                 .card-tip(v-if="tip.at === 'venue'", :style="{ '--tx': tip.x + 'px', '--ty': tip.y + 'px' }") 线下渠道：{{ activity.venue }}
               .card-line(v-if="activity.online.length", @pointermove="track($event, 'online')")
                 p 线上渠道：
                   template(v-for="([text, href], i) in activity.online", :key="href")
-                    a(:href="href", target="_blank") {{ text }}
+                    a(:href="href", target="_blank", rel="noopener", @click.stop) {{ text }}
                     template(v-if="i < activity.online.length - 1") 、
                 .card-tip(v-if="tip.at === 'online'", :style="{ '--tx': tip.x + 'px', '--ty': tip.y + 'px' }") 线上渠道：{{ activity.online.map((o) => o[0]).join('、') }}
         article.card-body
@@ -125,6 +104,7 @@ Teleport(to="body")
   height: 100%;
   perspective: 2600px;
   flex: 1 1 auto;
+  cursor: pointer;
 
   .disable-link-decoration();
 
@@ -223,6 +203,10 @@ Teleport(to="body")
       overflow: hidden;
       text-overflow: ellipsis;
 
+      @media (width < 768px) {
+        white-space: normal;
+      }
+
       .use-default-gradient-text();
 
       &::before {
@@ -252,6 +236,11 @@ Teleport(to="body")
       place-content: center space-evenly;
       flex: 1 1 auto;
 
+      @media (width < 768px) {
+        height: auto;
+        gap: .25em;
+      }
+
       .card-line {
         position: relative;
         width: 100%;
@@ -276,6 +265,13 @@ Teleport(to="body")
         overflow: hidden;
         text-overflow: ellipsis;
         margin: 0;
+
+        // 触屏没有悬停，省略号后的内容看不到
+        @media (width < 768px) {
+          height: auto;
+          white-space: normal;
+          line-height: 1.5;
+        }
 
         a {
           color: inherit;

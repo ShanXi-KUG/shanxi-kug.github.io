@@ -216,8 +216,9 @@ const away = (a: Activity) => {
   tabindex="0",
 )
   .axis-line(:class="{ faint: !dated.length }", :style="{ '--bar': bar }")
-  .axis-point.plain.origin(v-if="!dated.length")
+  .axis-point.gather.origin(v-if="!dated.length")
     .axis-dot
+      span.axis-wave(v-for="lag in waves('origin', 0)", :key="lag", :style="{ '--lag': lag }")
   template(v-for="p in placed", :key="p.a.id")
     .axis-point(
       v-if="p.inside",

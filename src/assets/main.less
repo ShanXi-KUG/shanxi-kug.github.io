@@ -102,6 +102,17 @@
 .harmony(700; Bold);
 .harmony(900; Black);
 
+@font-face {
+  font-family: "JetBrains Mono";
+  src: local("JetBrains Mono"), url("/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+// 中文字符 JetBrains Mono 没有，回落到正文字体
+code {
+  font-family: "JetBrains Mono", "HarmonyOS Sans SC", monospace;
+}
+
 html, :root {
   interpolate-size: allow-keywords;
 }

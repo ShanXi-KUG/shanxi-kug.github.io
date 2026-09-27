@@ -208,8 +208,6 @@ const away = (a: Activity) => {
   tabindex="0",
 )
   .axis-line(:class="{ faint: !dated.length }", :style="{ '--bar': bar }")
-  .axis-point.plain.origin(v-if="!dated.length")
-    .axis-dot
   template(v-for="p in placed", :key="p.a.id")
     .axis-point(
       v-if="p.inside",
@@ -453,10 +451,5 @@ const away = (a: Activity) => {
 
 .axis-line.faint {
   opacity: .28;
-}
-
-.axis-point.origin {
-  --x: 0px;
-  cursor: default;
 }
 </style>

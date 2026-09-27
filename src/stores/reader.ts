@@ -11,7 +11,7 @@ export const useReader = defineStore('reader', () => {
   const view = ref<View>('detail')
   const activity = computed(() => activities.find((a) => a.id === id.value) ?? null)
 
-  // 详情写进地址，复制链接即可分享；明信片预览只是临时浮层
+  // 只有详情进地址，便于分享
   function open(a: Activity, as: View) {
     id.value = a.id
     view.value = as

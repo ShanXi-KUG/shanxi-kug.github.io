@@ -23,7 +23,6 @@ const {y: inner} = useScroll(main);
 
 const showBackTop = computed(() => outer.value > 0 || inner.value / (home.value?.scrollHeight || 800) > .97);
 
-// 历史那段也要能点
 const axisItems = [...upcoming, ...history].filter(
   (a, i, all) => all.findIndex((b) => b.id === a.id) === i,
 );
@@ -79,14 +78,12 @@ main#body(ref="body")
   main#body {
     width: 100%;
     height: 100%;
-    &[dev] {background-color: #15ED41;}
     background-color: var(--default-white);
 
     .disable-list-style();
 
     .disable-browser-scrollbar();
 
-    // 滚动条会挤出横向溢出
     overflow-x: hidden;
 
     @header-height: 3.88em;
@@ -99,7 +96,6 @@ main#body(ref="body")
       display: block;
       margin: 0 auto;
       height: 100%;
-      &[dev] {background-color: #15ED41;height: 100%}
       background-color: var(--default-light-white);
       scroll-snap-type: y mandatory;
       overflow-y: scroll;
@@ -116,18 +112,15 @@ main#body(ref="body")
       }
 
       #home-page {
-        &[dev] { background-color: #4000FF; }
 
         #home-page-wrapper {
           position: absolute;
           width: 100%;
           height: 100%;
-          &[dev] {background-color: #296DFF;}
           display: grid;
           grid-template: "logo" 188fr "info" 30fr "temp" 116fr / minmax(0, 1fr);
 
           #title {
-            &[dev] {background-color: #0AFAB6;}
             place-content: center center;
             padding: 8.86% 0 0;
 
@@ -139,7 +132,6 @@ main#body(ref="body")
           }
 
           #content-wrapper {
-            &[dev] {background-color: #4000FF;}
             text-align: center;
             place-content: center;
             position: relative;
@@ -154,7 +146,6 @@ main#body(ref="body")
               padding: 0 .223em;
               line-height: @height;
               color: var(--default-half-gray);
-              &[dev] {background-color: #0AFAB6;}
               border: 1px var(--default-half-gray) solid;
               border-right: 0;
               border-left: 0;
@@ -208,7 +199,6 @@ main#body(ref="body")
           }
 
           #footer {
-            &[dev] {background-color: red;}
             position: relative;
             display: flex;
             flex-direction: column;
@@ -260,41 +250,34 @@ main#body(ref="body")
       }
 
       @sub-content-width: 90.25%;
+      @page-pad: clamp(1.5em, 5vh, 3.5em);
+      @panel-gap: clamp(1em, 2.5vh, 1.66em);
 
       #new-active {
         position: relative;
         // 不显式撑满，手机上会按最宽的那页缩放
         width: 100%;
         height: 100%;
-        &[dev] {background-color: #15ED41;}
 
         #new-active-wrapper {
           position: absolute;
           width: 100%;
           height: 100%;
-          &[dev] {background-color: #964be5;}
           display: grid;
-          grid-template: "time-axis" 233fr "card-area" 582fr;
+          grid-template: "time-axis" minmax(9.5em, 2fr) "card-area" 7fr / minmax(0, 1fr);
+          row-gap: @panel-gap;
+          padding-block: @page-pad;
 
           #time-axis-wrapper {
             grid-area: time-axis;
             position: relative;
             width: 100%;
             height: 100%;
-            min-height: 11em;
-            &[dev] {background-color: orange;}
-            place-content: center;
-            place-items: center;
-            padding-top: 5.66%;
-
-            @media (height < 760px) { padding-top: 2.4% }
 
             #axis-wrapper {
               width: @sub-content-width;
               margin: 0 auto;
-              height: 86.6%;
-              // 还要留给上下参差的标签
-              min-height: 9.5em;
+              height: 100%;
               background-color: var(--default-white);
               position: relative;
               padding: 2.33em;
@@ -312,23 +295,19 @@ main#body(ref="body")
             position: relative;
             width: 100%;
             height: 100%;
-            &[dev] {background-color: #15ED41;}
-            place-content: center;
-            place-items: center;
-            padding-bottom: 2.88%;
             overflow: hidden;
 
             #card-wrapper {
               width: @sub-content-width;
               margin: 0 auto;
-              height: 96.6%;
+              height: 100%;
               background-color: var(--default-white);
               position: relative;
               padding: 2.33em;
 
               .use-mini-border-radius();
 
-              // 阴影归明信片自己，放在这层翻转时会成一圈静止的边框
+              // 阴影放这层，翻卡时会留下一圈静止的边框
               #card-content {
                 width: 100%;
                 height: 100%;
@@ -340,7 +319,6 @@ main#body(ref="body")
       }
 
       #history-active {
-        &[dev] {background-color: #296DFF;}
         width: 100%;
         height: 100%;
         position: relative;
@@ -349,17 +327,13 @@ main#body(ref="body")
           position: absolute;
           width: 100%;
           height: 100%;
-          &[dev] {background-color: #15ED41;}
-          place-content: center;
-          place-items: center;
-          padding-top: 5.66%;
+          padding-block: @page-pad;
 
           #history-wrapper {
             width: @sub-content-width;
-            height: 83.6%;
+            height: 100%;
             margin: 0 auto;
             position: relative;
-            &[dev] {background-color: #4000FF;}
             background-color: var(--default-white);
             display: grid;
             grid-template: "title" 133.3fr "card-area" 666fr;
@@ -378,7 +352,6 @@ main#body(ref="body")
               font-weight: 400;
               padding-top: .22em;
               color: var(--default-half-gray);
-              &[dev] {background-color: gold }
             }
 
             #content-wrapper {
@@ -428,7 +401,7 @@ main#body(ref="body")
       }
 
       #home-page {
-        margin-top: 5em !important;
+        margin-top: 1em !important;
         height: 25em !important;
 
         // 只为提升优先级
@@ -444,7 +417,7 @@ main#body(ref="body")
       }
 
       #new-active {
-        // 手机端按内容取高，否则会被基础的 33em 撑出大片空白
+        // 否则基础的 33em 会撑出大片空白
         height: max-content !important;
 
         #new-active-wrapper {
@@ -452,6 +425,8 @@ main#body(ref="body")
           height: max-content !important;
           display: flex !important;
           flex-direction: column !important;
+          padding: 0 !important;
+          gap: 0 !important;
 
           nav#time-axis-wrapper {
             height: 3.34em !important;
@@ -505,7 +480,6 @@ main#body(ref="body")
 
         #history-active-wrapper {
           height: max-content !important;
-          // 底部留白与最新活动一致
           padding: 0 0 (1.11em * 1.44em) !important;
           position: relative !important;
 

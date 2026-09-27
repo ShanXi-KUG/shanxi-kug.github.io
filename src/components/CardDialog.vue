@@ -38,6 +38,7 @@ Transition(name="veil")
   width: min(52em, 92vw);
   height: min(26em, 70vh);
   cursor: pointer;
+  container-type: inline-size;
 
   .use-default-transition();
 

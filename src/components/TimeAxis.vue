@@ -26,7 +26,7 @@ const TIP_HALF = 130
 let frame = 0
 let cursor = { x: 0, y: 0, below: false }
 
-/** 指针位置直接写进 DOM 并按帧合并；走响应式会让整条轴每次移动都重渲染 */
+// 指针位置直接写 DOM 并按帧合并，免得整条轴跟着重渲染
 function paint() {
   frame = 0
   const el = tipEl.value
@@ -36,7 +36,6 @@ function paint() {
   el.classList.toggle('below', cursor.below)
 }
 
-/** 只在标签被省略或整条避让掉时出现；上方顶到页眉就翻到指针下方 */
 function track(e: PointerEvent) {
   const box = rail.value?.getBoundingClientRect()
   if (!box) return
@@ -55,7 +54,7 @@ function track(e: PointerEvent) {
   if (!frame) frame = requestAnimationFrame(paint)
 }
 
-// 轴上一律按时间排：上下参差与标签避让都依赖从左到右的顺序，拿类别序会错位
+// 参差与避让依赖从左到右的顺序，只能按时间排
 const dated = computed(() =>
   props.items
     .filter((a) => !Number.isNaN(a.date.getTime()))
@@ -69,7 +68,6 @@ const TAU = 0.8
 
 const fitted = ref(1)
 
-/** 粗细随缩放指数变化：放大趋近 1.2 倍，缩小趋近一半，铺满时为 1 */
 const bar = computed(() => {
   const zoomed = pxPerDay.value / (fitted.value || 1)
   return `${(BAR * (0.5 + 0.7 * (1 - Math.exp(-zoomed / TAU)))).toFixed(3)}em`
@@ -97,7 +95,6 @@ const PAD = 12
 
 const natural = ref<Record<string, number>>({})
 
-/** 标签全文宽度按字体量一次，拖动时不再测量 */
 function measure() {
   const el = rail.value
   const ctx = document.createElement('canvas').getContext('2d')
@@ -110,10 +107,6 @@ function measure() {
 type Side = 'above' | 'below'
 type Point = { a: Activity; x: number; side: Side; inside: boolean; mark: string; waves: string[]; box?: { left: number; width: number } }
 
-/**
- * 同侧相邻点至少隔 SPACING 才挂标签；宽度从左往右依次分配，
- * 不越过下一个点的引线，放不下的截成省略号，拖动与缩放时随之重算
- */
 const placed = computed(() => {
   const rows: Record<Side, Point[]> = { above: [], below: [] }
   const points = dated.value.map((a, i): Point => {
@@ -181,13 +174,12 @@ function move(e: PointerEvent) {
 }
 const up = () => (dragging.value = false)
 
-// 宽度一变映射就失真，点会飘出面板
 useResizeObserver(rail, ([box]) => {
   width.value = box.contentRect.width
   fit()
   measure()
 })
-// 网页字体晚到，先前按后备字体量的宽度会偏
+// 网页字体晚到，按后备字体量的宽度会偏
 onMounted(() => document.fonts.ready.then(measure))
 onBeforeUnmount(() => frame && cancelAnimationFrame(frame))
 watch(dated, () => (fit(), measure()))
@@ -216,9 +208,8 @@ const away = (a: Activity) => {
   tabindex="0",
 )
   .axis-line(:class="{ faint: !dated.length }", :style="{ '--bar': bar }")
-  .axis-point.gather.origin(v-if="!dated.length")
+  .axis-point.plain.origin(v-if="!dated.length")
     .axis-dot
-      span.axis-wave(v-for="lag in waves('origin', 0)", :key="lag", :style="{ '--lag': lag }")
   template(v-for="p in placed", :key="p.a.id")
     .axis-point(
       v-if="p.inside",
@@ -359,7 +350,6 @@ const away = (a: Activity) => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  // 被省略的那截只能靠 hover 看全
   cursor: pointer;
 
   .use-default-gradient-text();
@@ -457,7 +447,6 @@ const away = (a: Activity) => {
   }
 }
 
-// 标签被避让掉后连接线就悬空了
 .axis-point.bare::before {
   display: none;
 }

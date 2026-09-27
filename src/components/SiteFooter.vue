@@ -10,7 +10,7 @@ footer#footer-wrapper(name="about")
 </template>
 
 <style lang="less" scoped>
-// 组件化后作用域变了，App 那层的列表重置匹配不到这里
+// App 的列表重置作用不到组件内
 .disable-list-style();
 
 @qr: 7em;
@@ -74,12 +74,10 @@ footer#footer-wrapper {
     display: flex;
     place-items: center;
     place-content: center;
-    &[dev] {background-color: gold;}
 
     #platforms {
       width: 15em;
       height: 3em;
-      &[dev] {background-color: #0AFAB6;}
       display: flex;
       place-items: center;
       place-content: space-around;

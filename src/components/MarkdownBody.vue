@@ -9,7 +9,6 @@ defineProps<{ html?: string; full?: boolean }>()
 </template>
 
 <style lang="less" scoped>
-// 正文样式一律收在 .md 之下，避免外层的标签选择器与 MD 内容互相串味
 .md {
   width: 100%;
   height: 100%;
@@ -30,7 +29,6 @@ defineProps<{ html?: string; full?: boolean }>()
   .disable-browser-scrollbar();
   .disable-link-decoration();
 
-  // 底部淡出，示意下面还有
   mask-image: linear-gradient(to bottom, #000 calc(100% - 2.2em), transparent 100%);
 
   &.full {

@@ -25,7 +25,6 @@ function tap(e: MouseEvent) {
 
 let ease: ReturnType<typeof setTimeout>
 
-/** 翻转中整体收一点，免得近端凸出被祖先裁掉 */
 function flip() {
   flipped.value = !flipped.value
   flipping.value = true
@@ -43,7 +42,6 @@ const body = computed(() => props.activity.recap ?? props.activity.detail)
 
 const tip = ref({ x: 0, y: 0, at: '' })
 
-/** 只在文字被截断时出现，与时间轴一致 */
 function track(e: PointerEvent, at: string) {
   const line = e.currentTarget as HTMLElement
   const text = line.querySelector('p')
@@ -102,7 +100,8 @@ Teleport(to="body")
   position: relative;
   width: 100%;
   height: 100%;
-  perspective: 2600px;
+  // 透视随卡宽，宽屏翻转时才不出界
+  perspective: 400cqi;
   flex: 1 1 auto;
   cursor: pointer;
 
@@ -120,17 +119,14 @@ Teleport(to="body")
       transform: rotateY(180deg);
     }
 
-    // 旋转走过渡，缩放与抬升走关键帧，两者并行；只在翻转期间交给合成层
     &.flipping {
-      animation: --card-turn .62s @ease-slide;
+      animation: --kug-turn .62s @ease-slide;
       will-change: transform, scale, translate;
     }
   }
 
-  // 两面都要自带炫彩底，否则转起来只有白面在动
   .card-face {
     backface-visibility: hidden;
-    // 让两面各自成层，翻转时不必反复重绘阴影
     transform: translateZ(0);
     padding: 1.68em 1.66em 1.65em;
 
@@ -143,7 +139,7 @@ Teleport(to="body")
     }
   }
 
-  // 正面留在流内撑起高度，背面覆盖其上；否则手机端自适应高度会塌成 0
+  // 正面留在流内撑起高度，否则手机端会塌成 0
   .face-front {
     position: relative;
     width: 100%;
@@ -162,7 +158,6 @@ Teleport(to="body")
     grid-template: "head" 86fr "body" 255fr "foot" 41fr;
     overflow: hidden;
 
-    // 行高交给内容，避免留白
     @media (width < 768px) {
       padding: .60em 1.11em .58em;
       height: auto;
@@ -365,20 +360,11 @@ Teleport(to="body")
     inset: 0;
     display: grid;
     place-items: center;
-    // 自身再转 180° 与翻卡相抵，坐标不镜像，得直接给镜像渐变
+    // 背面坐标不随翻转镜像，渐变得预先镜像
     background-image: var(--default-kug-gradient-flip);
     transform: rotateY(180deg);
     text-align: center;
     color: var(--default-on-gradient);
-  }
-
-  // 这里不能用 filter：它会把 transform-style 压回 flat，preserve-3d 随即失效
-  @keyframes --card-turn {
-    0% { scale: 1; translate: 0 0 }
-    18% { scale: .84; translate: 0 -1% }
-    50% { scale: .68; translate: 0 -4% }
-    82% { scale: .84; translate: 0 -1% }
-    100% { scale: 1; translate: 0 0 }
   }
 
   .face-mark {
@@ -464,7 +450,6 @@ Teleport(to="body")
           }
         }
 
-        // 整个按钮可点，不只是文字
         a {
           display: block;
           padding: .17em 1.26em;

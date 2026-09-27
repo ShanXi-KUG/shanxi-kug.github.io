@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: lts/*
 
-      # 先全量升级；构建不过就退回只升次版本，别让一个不兼容的大版本卡住其余更新
+      # 大版本构建不过就只升次版本
       - id: bump
         run: |
           if npx --yes npm-check-updates -u && npm install && npm run build; then

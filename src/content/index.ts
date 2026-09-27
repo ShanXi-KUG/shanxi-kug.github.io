@@ -5,7 +5,6 @@ const md = new MarkdownIt({ html: true, linkify: true })
 
 export type Status = '报名中' | '进行中' | '已结束'
 
-/** 圆点的动效档位：聚集、纯环、发散、无 */
 export type Beat = 'gather' | 'plain' | 'spread' | 'none'
 
 export type Stage = 'new' | 'history'
@@ -64,7 +63,7 @@ function span(value: unknown): [Date, Date] | undefined {
   return Number.isNaN(from.getTime()) ? undefined : [from, Number.isNaN(to.getTime()) ? from : to]
 }
 
-/** 报名截止到活动开场这段空档也算进行中，只是不该有涟漪 */
+// 报名截止到开场的空档也算进行中，但没有涟漪
 function phase(enroll: [Date, Date] | undefined, during: [Date, Date], now: number) {
   if (now >= during[1].getTime()) return { status: '已结束' as Status, beat: 'none' as Beat }
   if (enroll && now < enroll[1].getTime()) return { status: '报名中' as Status, beat: 'gather' as Beat }
@@ -115,7 +114,7 @@ function build(): Activity[] {
   return list
 }
 
-/** SP 条目脱离类别，在拼平序列里插到第一个自身权重不低于对方的位置之前 */
+// SP 条目脱离类别，插到第一个权重不高于它的位置
 function promote(sorted: Activity[], sp: Activity[]) {
   for (const item of sp) {
     const at = sorted.findIndex((other) => item.weight >= other.weight)
@@ -135,7 +134,7 @@ function byCategory(list: Activity[]) {
 
 export const activities = build()
 
-/** 已结束的只留在历史栏，除非挂了 SP——那是为公示一类内容准备的 */
+// 已结束的只进历史栏，挂 SP 的公示除外
 export const upcoming = promote(
   byCategory(activities.filter((a) => a.status !== '已结束')),
   activities.filter((a) => a.status === '已结束' && a.sp),

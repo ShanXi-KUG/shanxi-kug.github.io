@@ -34,14 +34,13 @@ let armed = 0
 const bump = ref(0)
 let relax: ReturnType<typeof setTimeout>
 
-/** 到端点只回弹 */
 function nudge(dir: number) {
   bump.value = dir > 0 ? -18 : 18
   clearTimeout(relax)
   relax = setTimeout(() => (bump.value = 0), 180)
 }
 
-/** 一格一张、一次到位；冷却只为拦住触控板一次轻扫打出的连发 */
+// 冷却拦住触控板一次轻扫的连发
 function step(delta: number) {
   const now = performance.now()
   if (now - armed < COOLDOWN) return
@@ -60,7 +59,7 @@ function focus(id: string) {
 
 const edge = computed(() => root.value?.closest<HTMLElement>('#card-wrapper') ?? null)
 
-/** 檐口是灰色容器的内边距，落在它本身才翻卡；卡上与卡外都交还给页面 */
+// 滚轮落在卡外檐口才翻卡，其余交还页面
 function onWheel(e: WheelEvent) {
   if (stacked.value || e.target !== edge.value) return
   const dir = Math.sign(e.deltaY || e.deltaX)
@@ -117,6 +116,7 @@ watch(() => props.items.length, () => (pos.value = 0))
   flex: 0 0 100%;
   width: 100%;
   height: 100%;
+  container-type: inline-size;
 }
 
 .deck-arrow {
@@ -157,7 +157,6 @@ watch(() => props.items.length, () => (pos.value = 0))
     max-height: none;
   }
 
-  // 内容少就矮，避免大片留白
   .deck-slot {
     width: 100%;
     height: auto;

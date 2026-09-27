@@ -16,30 +16,56 @@ function flip() {
 
 <template lang="pug">
 .blank(:class="{ still: stage !== 'new' }", @click="flip", @contextmenu.prevent="flip")
-  .blank-inner(:class="{ flipped, flipping }", @animationend.self="flipping = false")
+  .blank-flip(:class="{ flipped, flipping }", @animationend.self="flipping = false")
     .blank-face.front
-      template(v-if="stage === 'new'")
-        .blank-mark 下一场尚未寄出
-        .blank-hint 点一下，看看怎么发起
-      template(v-else)
-        .blank-mark 还没有往期活动
-        .blank-hint 活动结束后自动归档到这里
+      .blank-inner
+        template(v-if="stage === 'new'")
+          .blank-mark 下一场尚未寄出
+          .blank-hint 点一下，看看怎么发起
+        template(v-else)
+          .blank-mark 还没有往期活动
+          .blank-hint 活动结束后自动归档到这里
     .blank-face.back(v-if="stage === 'new'")
-      ol
-        li 复制 #[code docs/模板/活动目录名/] 到 #[code src/activity/new/]
-        li 填写 #[code card.md]
-        li 提交，页面随之更新
+      .blank-inner
+        ol
+          li 复制 #[code docs/模板/活动目录名/] 到 #[code src/activity/new/]
+          li 填写 #[code card.md]
+          li 提交，页面随之更新
 </template>
 
 <style lang="less" scoped>
 .blank {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  perspective: 400cqi;
+
+  &.still {
+    cursor: default;
+  }
+}
+
+.blank-flip {
   position: relative;
   width: 100%;
   height: 100%;
+  transform-style: preserve-3d;
+  transition: transform .62s @ease-slide;
+
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+
+  &.flipping {
+    animation: --kug-turn .62s @ease-slide;
+    will-change: transform, scale, translate;
+  }
+}
+
+.blank-face {
   padding: 1.68em 1.66em 1.65em;
-  background-image: var(--default-kug-gradient);
-  cursor: pointer;
-  perspective: 1400px;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 
   .use-mini-border-radius();
   .default-shadow-mini-outset();
@@ -47,42 +73,23 @@ function flip() {
   @media (width < 768px) {
     padding: .88em .86em .84em;
   }
+
+  &.front {
+    position: relative;
+    height: 100%;
+    background-image: var(--default-kug-gradient);
+  }
+
+  &.back {
+    position: absolute;
+    inset: 0;
+    background-image: var(--default-kug-gradient-flip);
+    transform: rotateY(180deg);
+  }
 }
 
 .blank-inner {
-  position: relative;
-  width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-
-  // 手机端卡流按内容取高，两面都是绝对定位，不给高度就塌成一条
-  @media (width < 768px) {
-    min-height: 12em;
-  }
-
-  .use-slide-transition(transform);
-}
-
-.blank-inner.flipped {
-  transform: rotateY(180deg);
-}
-
-// 与明信片一致：边转边缩，免得近端被容器裁掉
-.blank-inner.flipping {
-  animation: --blank-turn .52s @ease-slide;
-}
-
-@keyframes --blank-turn {
-  50% { scale: .84 }
-}
-
-.blank.still {
-  cursor: default;
-}
-
-.blank-face {
-  position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
   place-items: center;
@@ -91,10 +98,9 @@ function flip() {
   padding: 1.5em;
   border-radius: .5em / .5em 0;
   background-color: var(--default-light-white);
-  backface-visibility: hidden;
 
-  &.back {
-    transform: rotateY(180deg);
+  @media (width < 768px) {
+    min-height: 12em;
   }
 }
 

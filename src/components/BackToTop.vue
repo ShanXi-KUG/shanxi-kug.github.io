@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{ show: boolean }>();
 
-/** 页脚由外层滚动露出，只跳内层锚点收不回去，两层都得归零 */
+// 页脚在外层滚动里，两层都得归零
 function toTop(e: MouseEvent) {
   e.preventDefault();
   for (const sel of ["main#body", "article#main"]) {
@@ -20,7 +20,6 @@ function toTop(e: MouseEvent) {
 #back-to-top {
   display: flex;
   position: fixed;
-  // 尺寸与位置沿用两年前的线上版
   width: max(3%, 3em);
   aspect-ratio: 1 / 1;
   background-color: var(--default-light-white);

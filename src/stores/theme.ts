@@ -11,7 +11,7 @@ export const useTheme = defineStore('theme', () => {
 
   const bar = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
 
-  // 跟随系统时不写属性，交给 prefers-color-scheme；手机地址栏颜色要跟着换
+  // 跟随系统时不写属性，交给 prefers-color-scheme
   watchEffect(() => {
     const root = document.documentElement
     if (mode.value === 'system') root.removeAttribute('data-theme')

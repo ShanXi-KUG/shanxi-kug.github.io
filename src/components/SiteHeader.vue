@@ -105,7 +105,6 @@ header#header {
     right: 0;
     height: 100%;
     width: max-content;
-    &[dev] {background-color: #15ED41;}
     display: inline-block;
     place-content: center;
 
@@ -227,7 +226,6 @@ header#header {
         font-size: 1.05em;
         font-weight: 500;
 
-        &[dev] {background-color: #4000FF;}
       }
 
       hr {
@@ -252,7 +250,6 @@ header#header {
       display: block;
       height: 95%;
       aspect-ratio: 1 / 1;
-      &[dev] {background-color: #4000FF}
       mask: url("/icons/menubtn.svg") no-repeat 50% 57.5% / 45%;
 
       .use-glint(0);
@@ -268,7 +265,7 @@ header#header {
         display: none !important;
       }
 
-      // 手机端只留主题开关，按各自角色恢复排布，别用 100% 把它压变形
+      // 手机端只留主题开关，别用 100% 把它压变形
       li#style {
         display: flex !important;
       }
@@ -288,7 +285,6 @@ header#header {
   }
 }
 
-// 设计稿「手机侧边栏」：抽屉 300/360=83.3%，卡片 279 宽、左右各留 11
 #drawer {
   position: fixed;
   inset: 0;
@@ -315,7 +311,7 @@ header#header {
   .disable-browser-scrollbar();
 }
 
-// 三栏等分两侧，标题才能相对整块面板居中，不被返回键推偏
+// 三栏等分，标题才不被返回键推偏
 .drawer-head {
   height: 3.06em;
   flex: 0 0 auto;
@@ -383,7 +379,6 @@ header#header {
     .use-glint-paint(var(--default-half-gray));
   }
 
-  // 设计稿里 Kotlin Docs 常亮渐变，按下只转角度
   &.is-out {
     span {
       --kug-lit: 1;
@@ -434,7 +429,7 @@ header#header {
     inset: 0;
   }
 
-  // 各图标墨迹占 viewBox 的比例不同，按墨迹反算尺寸，视觉上才一样大
+  // 各图标墨迹占比不同，按墨迹反算尺寸
   &.qq { mask: url("/icons/platforms/qq.svg") no-repeat center / 103% }
   &.mail { mask: url("/icons/platforms/mail.svg") no-repeat center / 93% }
   &.wx { mask: url("/icons/platforms/wx.svg") no-repeat center / 96% }

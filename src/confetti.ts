@@ -2,7 +2,6 @@ const CANDY = ['#844EFE', '#E93D75', '#FFB547', '#3DD6C6', '#5AA9FF', '#FF7EB6']
 const G = 1400
 const DRAG = 3.2
 
-/** 从元素中心向上喷出彩带，全部落定后移除图层 */
 export function confetti(from: HTMLElement, count = 36) {
   const { left, top, width, height } = from.getBoundingClientRect()
   const layer = document.createElement('div')
@@ -24,7 +23,7 @@ export function confetti(from: HTMLElement, count = 36) {
     const spin = (Math.random() - 0.5) * 1080
     const flap = 360 + Math.random() * 720
 
-    // 线性空气阻力下的抛体：先冲高，再以终端速度下落
+    // 线性阻力下的抛体
     const frames = Array.from({ length: 13 }, (_, k) => {
       const t = (k / 12) * life
       const fade = 1 - Math.exp(-DRAG * t)

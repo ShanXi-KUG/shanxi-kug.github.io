@@ -6,7 +6,7 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 
-// 右键留给翻卡背，屏蔽系统菜单
+// 右键留给翻卡
 useEventListener(window, 'contextmenu', (e) => e.preventDefault())
 
 createApp(App).use(createPinia()).mount('#app')

@@ -41,6 +41,10 @@ Transition(name="veil")
 
   .use-default-transition();
 
+  &:hover {
+    scale: 1.012;
+  }
+
   @media (width < 768px) {
     height: min(24em, 72vh);
   }
